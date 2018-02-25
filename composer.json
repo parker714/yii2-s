@@ -1,0 +1,8 @@
+{
+  "require": {
+    "yiisoft/yii2": "~2.0.14",
+    "tourze/swoole-yii2": "^0.1.3",
+    "feehi/yii2-swoole": "^0.1.2",
+    "deepziyu/yii2-swoole": "^0.1.0"
+  }
+}
