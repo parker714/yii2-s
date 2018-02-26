@@ -24,12 +24,6 @@ class Error extends ErrorHandler
      * @param \Exception $exception
      */
     public function renderException($exception) {
-        //Yii::error(self::convertExceptionToString($exception));
-//        if (PHP_SAPI === 'cli') {
-//            return;
-//        }
-
-        var_dump("111111");
         return $this->webResponse($exception);
     }
     /**

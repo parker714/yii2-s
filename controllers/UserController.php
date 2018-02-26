@@ -18,8 +18,6 @@ class UserController extends Controller
             'age' => 20
         ];
 
-        1/0;
-
         return $user;
     }
 }

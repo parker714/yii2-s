@@ -4,10 +4,10 @@ defined('YII_DEBUG') or define('YII_DEBUG', false);
 defined('YII_ENV') or define('YII_ENV', 'prod');
 
 // 注册 Composer 自动加载器
-require(__DIR__ . '/vendor/autoload.php');
+require(__DIR__ . '/../vendor/autoload.php');
 
 // 包含 Yii 类文件
-require(__DIR__ . '/vendor/yiisoft/yii2/Yii.php');
+require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
 class Swoole
 {
@@ -29,7 +29,7 @@ class Swoole
                 'dispatch_mode' => 2,
 
                 'daemonize' => 0,// 后台运行
-                'log_file' =>'/media/sf_www/swoole/yii2/sw.log',// 日志文件地址
+                //'log_file' =>'/media/sf_www/swoole/yii2/sw.log',// 日志文件地址
             ]
         );
     }
@@ -44,7 +44,7 @@ class Swoole
     {
         echo "Swoole worker is started,id is $worker_id \n";
 
-        $config            = require(__DIR__ . '/config/web.php');
+        $config            = require(__DIR__ . '/../config/web.php');
         $this->_yii2WebApp = new \yii\web\Application($config);
     }
 
@@ -55,8 +55,6 @@ class Swoole
 
     public function onRequest($request, $response)
     {
-        //Yii::error("test log");
-
         $response->header("Content-Type", "application/json");
 
         // 请求路由分发
