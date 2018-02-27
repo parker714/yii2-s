@@ -1,4 +1,5 @@
 {
+  "name":"swoole-yii2",
   "require": {
     "yiisoft/yii2": "~2.0.14",
     "tourze/swoole-yii2": "^0.1.3",

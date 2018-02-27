@@ -2,3 +2,4 @@
 .idea/
 runtime/
 sw.log
+composer.lock
