@@ -1,6 +1,7 @@
 {
   "name":"degree66/swoole-yii2",
   "description": "swoole yii2",
+  "type":"project",
   "keywords": [
     "yii2",
     "swoole"
