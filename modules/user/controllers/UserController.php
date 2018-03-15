@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\user\controllers;
 
 use yii\base\Controller;
 
@@ -8,16 +8,11 @@ class UserController extends Controller
 {
     public function actionGet()
     {
-        // 参数获取
-
-        // db操作
-
-        // redis操作
+        // ...
         $user = [
-            'name' => 'xi',
-            'age' => 20
+            'name'    => 'pb',
+            'age'     => 18
         ];
-
         return $user;
     }
 }

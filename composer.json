@@ -1,7 +1,7 @@
 {
-  "name":"degree66/swoole-yii2",
+  "name": "degree66/swoole-yii2",
   "description": "swoole yii2",
-  "type":"project",
+  "type": "project",
   "license": "Apache-2.0",
   "keywords": [
     "yii2",
@@ -9,5 +9,8 @@
   ],
   "require": {
     "yiisoft/yii2": "~2.0.14"
+  },
+  "require-dev": {
+    "yiisoft/yii2-gii": "*"
   }
 }

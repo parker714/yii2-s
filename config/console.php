@@ -1,52 +1,45 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$db     = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'basic-console',
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'controllerNamespace' => 'app\commands',
-    'aliases' => [
-    ],
-//    'as app'=>[
-//        'class' => ''
-//    ],
-    'components' => [
-        'request' => [
-            'class'=>'yii\console\Request',
-            'as request' => [
-                'class' =>'app\Behaviors\Request'
-            ]
+    'id'                  => 'basic-console',
+    'basePath'            => dirname(__DIR__),
+    'bootstrap'           => ['log', 'gii'],
+    'modules'             => [
+        'gii'  => [
+            'class' => 'yii\gii\Module'
         ],
-        'session' =>[
+        'user' => [
+            'class' => 'app\modules\user\UserMod'
+        ]
+    ],
+    'controllerNamespace' => 'app\commands',
+    'aliases'             => [],
+    'components'          => [
+        'request' => [
+            'class' => 'yii\console\Request',
+        ],
+        'session' => [
             'class' => 'yii\web\session'
         ],
-        'cache' => [
+        'cache'   => [
             'class' => 'yii\caching\FileCache',
         ],
-        'log' => [
-            'flushInterval' => 1,
-            'targets' => [
+        'log'     => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets'    => [
                 [
-                    //'class' => 'yii\log\FileTarget',
-                    'class' => 'app\components\Log',
-                    'levels' => ['error', 'warning'],
-                    'exportInterval' => 1,
+                    'class'   => 'yii\log\FileTarget',
+                    'levels'  => ['error', 'warning'],
+                    'logVars' => []
                 ],
             ],
         ],
-        'db' => $db,
+        'db'      => $db,
     ],
-    'params' => $params,
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
-        ],
-    ],
-    */
+    'params'              => $params,
 ];
 
 return $config;
