@@ -7,27 +7,27 @@ $config = [
     'id'         => 'basic',
     'basePath'   => dirname(__DIR__),
     'bootstrap'  => ['log'],
-    'aliases'    => [
-    ],
-    'modules'    => [
-        'user' => [
-            'class' => 'app\modules\user\UserMod'
-        ]
-    ],
     'components' => [
         'request'    => [
-            'cookieValidationKey'  => 'xx',
-            'enableCsrfValidation' => false
+            'class'  => \app\components\Request::class,
+            'cookieValidationKey'  => 'pb',
+            'enableCsrfValidation' => false,
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
+        ],
+        'errorHandler' => [
+            'class'  => \app\components\ErrorHandler::class,
         ],
         'response'   => [
-            'format' => 'json'
+            'class'  => \app\components\Response::class,
+            'format' => \yii\web\Response::FORMAT_JSON,
         ],
         'cache'      => [
             'class' => 'yii\caching\FileCache',
         ],
         'log'        => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets'    => [
+            'targets' => [
                 [
                     'class'   => 'yii\log\FileTarget',
                     'levels'  => ['error', 'warning'],
@@ -36,10 +36,18 @@ $config = [
             ],
         ],
         'db'         => $db,
+//        'urlManager' => [
+//            'enablePrettyUrl'     => true,
+//            'enableStrictParsing' => false
+//        ],
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName'  => false,
-        ],
+            'enablePrettyUrl'     => true,
+            'enableStrictParsing' => true,
+            'showScriptName'      => false,
+            'rules'               => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+            ],
+        ]
     ],
     'params'     => $params,
 ];
