@@ -22,5 +22,5 @@ php bin/swHttp.php
 
 
 赞赏一下：
-
+![degree san](https://raw.githubusercontent.com/degree66/swoole-yii2/master/web/pay.png)
 
