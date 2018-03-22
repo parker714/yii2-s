@@ -2,11 +2,9 @@
 
 namespace app\controllers;
 
-use app\exceptions\Base;
 use app\exceptions\Param;
 use Yii;
 use yii\rest\Controller;
-use yii\web\NotFoundHttpException;
 
 class UserController extends Controller {
     public function behaviors() {

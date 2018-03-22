@@ -4,16 +4,16 @@ namespace app\components;
 
 class Response extends \yii\web\Response
 {
-    protected $swResponse;
+    private $_swResponse;
 
     public function setSwResponse($response)
     {
-        $this->swResponse = $response;
+        $this->_swResponse = $response;
     }
 
     public function getSwResponse()
     {
-        return $this->swResponse;
+        return $this->_swResponse;
     }
 
     public function sendHeaders()
@@ -23,20 +23,20 @@ class Response extends \yii\web\Response
             foreach ($headers as $name => $values) {
                 $name = str_replace(' ', '-', ucwords(str_replace('-', ' ', $name)));
                 foreach ($values as $value) {
-                    $this->swResponse->header($name, $value);
+                    $this->_swResponse->header($name, $value);
                 }
             }
         }
-        $this->swResponse->status($this->getStatusCode());
+        $this->_swResponse->status($this->getStatusCode());
     }
 
     public function sendContent()
     {
         if ($this->stream === null) {
             if ($this->content) {
-                $this->swResponse->end($this->content);
+                $this->_swResponse->end($this->content);
             } else {
-                $this->swResponse->end();
+                $this->_swResponse->end();
             }
             return;
         }
@@ -48,17 +48,17 @@ class Response extends \yii\web\Response
                 if ($pos + $chunkSize > $end) {
                     $chunkSize = $end - $pos + 1;
                 }
-                $this->swResponse->write(fread($handle, $chunkSize));
+                $this->_swResponse->write(fread($handle, $chunkSize));
                 flush(); // Free up memory. Otherwise large files will trigger PHP's memory limit.
             }
             fclose($handle);
         } else {
             while (!feof($this->stream)) {
-                $this->swResponse->write(fread($this->stream, $chunkSize));
+                $this->_swResponse->write(fread($this->stream, $chunkSize));
                 flush();
             }
             fclose($this->stream);
         }
-        $this->swResponse->end();
+        $this->_swResponse->end();
     }
 }

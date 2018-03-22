@@ -1,5 +1,5 @@
 # swoole-yii2
-swoole 与 yii2 结合栗子
+两种方式将swoole 与 yii2 结合
 
 1. 通过yii2控制台应用程序加载swoole
 
@@ -9,7 +9,11 @@ swoole 与 yii2 结合栗子
 composer create-project degree66/swoole-yii2
 
 # run
-1. ./yii sw/run
+1.控制台运行 
 
-2. php bin/swHttp.php
+./yii sw/run
+
+2.加载运行
+
+php bin/swHttp.php
 

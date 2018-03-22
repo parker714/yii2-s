@@ -23,12 +23,8 @@ class swHttp {
     }
     
     public function onRequest($request, $response) {
-        //try{
-            $this->setYii2Env($request, $response);
-            Yii::$app->run();
-//        }catch (Exception $e){
-//            Yii::$app->errorHandler->renderException($e);
-//        }
+        $this->setYii2Env($request, $response);
+        Yii::$app->run();
     }
     
     public function setYii2Env($request, $response) {
@@ -36,7 +32,7 @@ class swHttp {
         Yii::$app->response->setSwResponse($response);
         
         Yii::$app->request->setRequestEnv();
-        Yii::$app->response->isSent = false;
+        Yii::$app->response->clear();
     }
 }
 
@@ -46,8 +42,11 @@ defined('YII_ENV') or define('YII_ENV', 'dev');
 
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
+require(__DIR__ . '/../sw/Application.php');
 $config = include(__DIR__ . '/../config/web.php');
-new \yii\web\Application($config);
+//new \yii\web\Application($config);
+
+new \app\Application($config);
 
 //----------------run sw------------------------
 $swConf = ['pid_file'      => __DIR__ . '/server.pid',
