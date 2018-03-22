@@ -16,10 +16,12 @@ class swHttp {
         $this->_http->start();
     }
     
-    public function onWorkerStart($server, $worker_id) {
+    public function onStart($server) {
     }
     
-    public function onStart($server) {
+    public function onWorkerStart($server, $worker_id) {
+        $config = include(__DIR__ . '/../config/web.php');
+        new \app\sw\Application($config);
     }
     
     public function onRequest($request, $response) {
@@ -28,11 +30,12 @@ class swHttp {
     }
     
     public function setYii2Env($request, $response) {
+        Yii::$app->response->clear();
+        
         Yii::$app->request->setSwRequest($request);
         Yii::$app->response->setSwResponse($response);
         
         Yii::$app->request->setRequestEnv();
-        Yii::$app->response->clear();
     }
 }
 
@@ -43,10 +46,6 @@ defined('YII_ENV') or define('YII_ENV', 'dev');
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 require(__DIR__ . '/../sw/Application.php');
-$config = include(__DIR__ . '/../config/web.php');
-//new \yii\web\Application($config);
-
-new \app\Application($config);
 
 //----------------run sw------------------------
 $swConf = ['pid_file'      => __DIR__ . '/server.pid',

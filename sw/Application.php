@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace app\sw;
 
 use Yii;
 use yii\base\ExitException;
