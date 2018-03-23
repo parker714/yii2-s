@@ -30,12 +30,10 @@ class swHttp {
     }
     
     public function setYii2Env($request, $response) {
-        Yii::$app->response->clear();
-        
         Yii::$app->request->setSwRequest($request);
         Yii::$app->response->setSwResponse($response);
-        
         Yii::$app->request->setRequestEnv();
+        Yii::$app->response->clear();
     }
 }
 
@@ -50,10 +48,8 @@ require(__DIR__ . '/../sw/Application.php');
 //----------------run sw------------------------
 $swConf = ['pid_file'      => __DIR__ . '/server.pid',
            'worker_num'    => 4,
-           // worker process num
            'max_request'   => 1000,
            'dispatch_mode' => 2,
            'daemonize'     => 0,
-           // 后台运行
-];
+    ];
 (new swHttp())->run($swConf);

@@ -4,19 +4,24 @@ namespace app\components;
 
 use Yii;
 use app\exceptions\Base;
+use yii\base\ErrorException;
 use yii\base\ExitException;
 
-class ErrorHandler extends \yii\web\ErrorHandler
-{
-    public function renderException($exception){
-        $data = [
-            'err_code' => 10000,
-            'err_msg' => 'system busy'
-        ];
+class ErrorHandler extends \yii\base\ErrorHandler {
+    public function renderException($exception) {
+        $data = ['err_code' => 10000,
+                 'err_msg'  => 'system busy'];
         
-        if($exception instanceof Base){
+        if ($exception instanceof Base) {
             $data['err_code'] = $exception->getCode();
-            $data['err_msg'] = $exception->getMessage();
+            $data['err_msg']  = $exception->getMessage();
+        }
+        
+        if (YII_DEBUG) {
+            $data['debug'] = ['err_code'  => $exception->getCode(),
+                              'err_mse'   => $exception->getMessage(),
+                              'err_file'  => $exception->getFile(),
+                              'err_line'  => $exception->getLine()];
         }
         
         Yii::$app->response->data = $data;
@@ -24,8 +29,7 @@ class ErrorHandler extends \yii\web\ErrorHandler
     }
     
     // sw 程序中禁止使用exit/die
-    public function handleException($exception)
-    {
+    public function handleException($exception) {
         if ($exception instanceof ExitException) {
             return;
         }
@@ -33,13 +37,7 @@ class ErrorHandler extends \yii\web\ErrorHandler
         $this->exception = $exception;
         
         // disable error capturing to avoid recursive errors while handling exceptions
-        $this->unregister();
-        
-        // set preventive HTTP status code to 500 in case error handling somehow fails and headers are sent
-        // HTTP exceptions will override this value in renderException()
-        if (PHP_SAPI !== 'cli') {
-            http_response_code(500);
-        }
+        // $this->unregister();
         
         try {
             $this->logException($exception);
@@ -48,7 +46,8 @@ class ErrorHandler extends \yii\web\ErrorHandler
             }
             $this->renderException($exception);
             if (!YII_ENV_TEST) {
-                \Yii::getLogger()->flush(true);
+                \Yii::getLogger()
+                    ->flush(true);
                 if (defined('HHVM_VERSION')) {
                     flush();
                 }
@@ -64,5 +63,36 @@ class ErrorHandler extends \yii\web\ErrorHandler
         }
         
         $this->exception = null;
+    }
+    
+    // sw 程序中禁止使用exit/die
+    public function handleError($code, $message, $file, $line)
+    {
+        if (error_reporting() & $code) {
+            // load ErrorException manually here because autoloading them will not work
+            // when error occurs while autoloading a class
+            if (!class_exists('yii\\base\\ErrorException', false)) {
+                require_once Yii::getAlias('@yii/base/ErrorException.php');
+            }
+            $exception = new ErrorException($message, $code, $code, $file, $line);
+            
+            // in case error appeared in __toString method we can't throw any exception
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            array_shift($trace);
+            
+            foreach ($trace as $frame) {
+                if ($frame['function'] === '__toString') {
+                    $this->handleException($exception);
+                    if (defined('HHVM_VERSION')) {
+                        flush();
+                    }
+                    //exit(1);
+                }
+            }
+            
+            throw $exception;
+        }
+        
+        return false;
     }
 }

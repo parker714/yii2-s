@@ -29,10 +29,8 @@ class Application extends \yii\web\Application {
             return $e->statusCode;
         } catch (\Exception $exception) {
             Yii::$app->errorHandler->handleException($exception);
-            return 0;
         } catch (\Throwable $errorException) {
             Yii::$app->errorHandler->handleException($errorException);
-            return 0;
         }
     }
 }
