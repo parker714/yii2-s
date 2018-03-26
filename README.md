@@ -33,9 +33,10 @@ with log 10327.91qps
 without log 12957.31qps
 
 # 备注
-详细文档：TODO
-
+本项目思路教程：http://www.yiichina.com/tutorial/1641
 
 赞赏一下：
 ![degree san](https://raw.githubusercontent.com/degree66/swoole-yii2/master/web/pay.png)
+
+有问题加群:218327228
 
