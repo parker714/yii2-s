@@ -19,26 +19,15 @@ php bin/swHttp.php
 
 # benchmark
 4C 8G 8worker
-
 ab -c 5000 -n 1000000
 
 PHP 5.6
-with log 7271.29qps 
-
-without log 10552.19qps
-
+10552.19qps
 PHP 7.2.3
-with log 10327.91qps
- 
-without log 12957.31qps
+12957.31qps
 
 # 备注
 详细教程：http://www.yiichina.com/tutorial/1641
 
-有问题加群: 218327228
-
 微信扫一扫：
-![degree san](https://raw.githubusercontent.com/degree66/swoole-yii2/master/web/pay.png)
-
-
-
+<img src="https://raw.githubusercontent.com/degree66/swoole-yii2/master/web/pay.png" width = "200" height = "200" />
