@@ -3,19 +3,21 @@
 
 1. 通过yii2控制台应用程序加载swoole (tcp server)
 
-2. 通过swoole脚本模拟运行yii2应用 (http server)
+2. 通过swoole脚本模拟运行yii2Web应用 (http server)
+
+详细教程：http://www.yiichina.com/tutorial/1641
 
 # install
 composer create-project degree66/swoole-yii2
 
 # run
-1.控制台运行（tcp-server）
+1.控制台应用运行（tcp-server）
 
 ./yii sw-tcp/run
 
 2.脚本运行（http-server）
 
-php bin/swHttp.php
+php bin/sw.php
 
 # benchmark
 4C 8G 8worker
@@ -27,7 +29,5 @@ PHP 7.2.3
 12957.31qps
 
 # 备注
-详细教程：http://www.yiichina.com/tutorial/1641
-
-微信扫一扫：
-<img src="https://raw.githubusercontent.com/degree66/swoole-yii2/master/web/pay.png" width = "200" height = "200" />
+微信扫一扫：<br>
+<img src="https://raw.githubusercontent.com/degree66/swoole-yii2/master/web/pay.png" width = "150" height = "150" />

@@ -2,6 +2,9 @@
 namespace app\exceptions;
 
 class Param extends Base{
-    protected $code = 20000;
-    protected $message = 'param error';
+    const PARAM_ERR = 10000;
+    
+    public static $reasons = [
+        self::PARAM_ERR => 'param err'
+    ];
 }

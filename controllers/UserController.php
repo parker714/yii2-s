@@ -13,6 +13,7 @@ class UserController extends Controller {
     
     // POST /users
     public function actionCreate() {
+        //throw new Param(Param::PARAM_ERR);
         // ...
         return ['get'       => Yii::$app->request->getQueryParams(),
                 'post'      => Yii::$app->request->getBodyParams(),
@@ -24,9 +25,10 @@ class UserController extends Controller {
     // GET /users/11
     public function actionView() {
         //1/0;
-        //throw new Base();
-        //throw new Param();
+        //throw new Param(Param::PARAM_ERR);
         
-        return ['get' => Yii::$app->request->getQueryParams(),];
+        return [
+            'get' => Yii::$app->request->getQueryParams(),
+            ];
     }
 }

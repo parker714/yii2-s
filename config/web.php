@@ -4,7 +4,7 @@ $params = require __DIR__ . '/params.php';
 $db     = require __DIR__ . '/db.php';
 
 $config = [
-    'id'         => 'http',
+    'id'         => 'degree',
     'basePath'   => dirname(__DIR__),
     'bootstrap'  => ['log'],
     'components' => [
@@ -40,6 +40,7 @@ $config = [
 //            'enablePrettyUrl'     => true,
 //            'enableStrictParsing' => false
 //        ],
+        // restful
         'urlManager' => [
             'enablePrettyUrl'     => true,
             'enableStrictParsing' => true,

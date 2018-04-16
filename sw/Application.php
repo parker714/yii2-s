@@ -3,10 +3,8 @@
 namespace app\sw;
 
 use Yii;
-use yii\base\ExitException;
 
 class Application extends \yii\web\Application {
-    
     public function run() {
         try {
             $this->state = self::STATE_BEFORE_REQUEST;
@@ -24,9 +22,6 @@ class Application extends \yii\web\Application {
             $this->state = self::STATE_END;
             
             return $response->exitStatus;
-        } catch (ExitException $e) {
-            $this->end($e->statusCode, isset($response) ? $response : null);
-            return $e->statusCode;
         } catch (\Exception $exception) {
             Yii::$app->errorHandler->handleException($exception);
         } catch (\Throwable $errorException) {

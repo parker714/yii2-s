@@ -9,19 +9,19 @@ use yii\base\ExitException;
 
 class ErrorHandler extends \yii\base\ErrorHandler {
     public function renderException($exception) {
-        $data = ['err_code' => 10000,
-                 'err_msg'  => 'system busy'];
+        $data = ['code' => 10000,
+                 'msg'  => 'system busy'];
         
         if ($exception instanceof Base) {
-            $data['err_code'] = $exception->getCode();
-            $data['err_msg']  = $exception->getMessage();
+            $data['code'] = $exception->getCode();
+            $data['msg']  = $exception->getMessage();
         }
         
         if (YII_DEBUG) {
-            $data['debug'] = ['err_code'  => $exception->getCode(),
-                              'err_mse'   => $exception->getMessage(),
-                              'err_file'  => $exception->getFile(),
-                              'err_line'  => $exception->getLine()];
+            $data['debug'] = ['code' => $exception->getCode(),
+                              'msg'  => $exception->getMessage(),
+                              'file' => $exception->getFile(),
+                              'line' => $exception->getLine()];
         }
         
         Yii::$app->response->data = $data;
@@ -35,39 +35,12 @@ class ErrorHandler extends \yii\base\ErrorHandler {
         }
         
         $this->exception = $exception;
-        
-        // disable error capturing to avoid recursive errors while handling exceptions
-        // $this->unregister();
-        
-        try {
-            $this->logException($exception);
-            if ($this->discardExistingOutput) {
-                $this->clearOutput();
-            }
-            $this->renderException($exception);
-            if (!YII_ENV_TEST) {
-                \Yii::getLogger()
-                    ->flush(true);
-                if (defined('HHVM_VERSION')) {
-                    flush();
-                }
-                // sw 程序中禁止使用exit/die
-                //exit(1);
-            }
-        } catch (\Exception $e) {
-            // an other exception could be thrown while displaying the exception
-            $this->handleFallbackExceptionMessage($e, $exception);
-        } catch (\Throwable $e) {
-            // additional check for \Throwable introduced in PHP 7
-            $this->handleFallbackExceptionMessage($e, $exception);
-        }
-        
+        $this->renderException($exception);
         $this->exception = null;
     }
     
     // sw 程序中禁止使用exit/die
-    public function handleError($code, $message, $file, $line)
-    {
+    public function handleError($code, $message, $file, $line) {
         if (error_reporting() & $code) {
             // load ErrorException manually here because autoloading them will not work
             // when error occurs while autoloading a class
@@ -83,9 +56,6 @@ class ErrorHandler extends \yii\base\ErrorHandler {
             foreach ($trace as $frame) {
                 if ($frame['function'] === '__toString') {
                     $this->handleException($exception);
-                    if (defined('HHVM_VERSION')) {
-                        flush();
-                    }
                     //exit(1);
                 }
             }
@@ -94,5 +64,20 @@ class ErrorHandler extends \yii\base\ErrorHandler {
         }
         
         return false;
+    }
+    
+    public function handleFatalError() {
+        // load ErrorException manually here because autoloading them will not work
+        // when error occurs while autoloading a class
+        if (!class_exists('yii\\base\\ErrorException', false)) {
+            require_once Yii::getAlias('@yii/base/ErrorException.php');
+        }
+        
+        $error = error_get_last();
+        if (ErrorException::isFatalError($error)) {
+            $exception       = new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
+            $this->exception = $exception;
+            $this->renderException($exception);
+        }
     }
 }
