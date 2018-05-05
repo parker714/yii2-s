@@ -28,7 +28,6 @@ class ErrorHandler extends \yii\base\ErrorHandler {
         Yii::$app->response->send();
     }
     
-    // sw 程序中禁止使用exit/die
     public function handleException($exception) {
         if ($exception instanceof ExitException) {
             return;
@@ -39,7 +38,6 @@ class ErrorHandler extends \yii\base\ErrorHandler {
         $this->exception = null;
     }
     
-    // sw 程序中禁止使用exit/die
     public function handleError($code, $message, $file, $line) {
         if (error_reporting() & $code) {
             // load ErrorException manually here because autoloading them will not work

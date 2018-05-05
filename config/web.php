@@ -23,6 +23,9 @@ $config = [
             'class'  => \app\components\Response::class,
             'format' => \yii\web\Response::FORMAT_JSON,
         ],
+        'sw'      => [
+            'class' => \app\components\Sw::class,
+        ],
         'cache'      => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -40,13 +43,16 @@ $config = [
 //            'enablePrettyUrl'     => true,
 //            'enableStrictParsing' => false
 //        ],
-        // restful
+        // restful conf
         'urlManager' => [
             'enablePrettyUrl'     => true,
             'enableStrictParsing' => true,
             'showScriptName'      => false,
             'rules'               => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'user'
+                ],
             ],
         ]
     ],

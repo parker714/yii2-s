@@ -11,11 +11,12 @@ $conf = include(__DIR__ . '/../config/web.php');
 $app  = new \app\sw\Application($conf);
 
 //---------------- sw application ----------------
-$swConf = ['pid_file'      => __DIR__ . '/server.pid',
-           'worker_num'    => 1,
-           'max_request'   => 500,
-           'dispatch_mode' => 2,
-           'daemonize'     => 0];
+$swConf = ['pid_file'        => __DIR__ . '/server.pid',
+           'worker_num'      => 2,
+           'task_worker_num' => 1,
+           'max_request'     => 500,
+           'dispatch_mode'   => 2,
+           'daemonize'       => 0];
 
 require(__DIR__ . '/../sw/server/Http.php');
 (new \app\sw\server\Http())->run($swConf, $app);
