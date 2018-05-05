@@ -5,7 +5,7 @@
 
 2. 通过swoole脚本模拟运行yii2Web应用 (http server)
 
-详细教程：http://www.yiichina.com/tutorial/1641
+详细教程：https://github.com/degree24/swoole-yii2/blob/master/course.md
 
 # install
 composer create-project degree66/swoole-yii2
