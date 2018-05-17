@@ -15,7 +15,10 @@ class Response extends \yii\web\Response
     {
         return $this->_swResponse;
     }
-
+    
+    /**
+     *  重写发送头
+     */
     public function sendHeaders()
     {
         $headers = $this->getHeaders();
@@ -29,7 +32,10 @@ class Response extends \yii\web\Response
         }
         $this->_swResponse->status($this->getStatusCode());
     }
-
+    
+    /**
+     * 重写发送内容
+     */
     public function sendContent()
     {
         if ($this->stream === null) {
@@ -38,6 +44,7 @@ class Response extends \yii\web\Response
             } else {
                 $this->_swResponse->end();
             }
+            
             return;
         }
         $chunkSize = 2 * 1024 * 1024; // 2MB per chunk swoole limit
