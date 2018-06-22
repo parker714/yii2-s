@@ -1,11 +1,5 @@
 # swoole-yii2
-两种思路将swoole 与 yii2 结合 
-
-1. 通过yii2控制台应用程序加载swoole (tcp server)
-
-2. 通过swoole脚本模拟运行yii2Web应用 (http server)
-
-详细教程：https://github.com/degree24/swoole-yii2/blob/master/course.md
+教程：https://github.com/degree24/swoole-yii2/blob/master/course.md
 
 # install
 composer create-project degree66/swoole-yii2
@@ -17,7 +11,7 @@ composer create-project degree66/swoole-yii2
 
 2.脚本运行（http-server）
 
-php bin/sw.php
+bin/sw
 
 # benchmark
 4C 8G 8worker
