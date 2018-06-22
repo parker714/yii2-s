@@ -1,13 +1,15 @@
 <?php
 /**
- * sw http conf
+ * sw conf
  */
-return ['process_name' => 'sw_yii2',
-        'ip'           => '0.0.0.0',
-        'port'         => 9501,
-        'server'       => ['pid_file'        => __DIR__ . '/server.pid',
-                           'worker_num'      => 1,
-                           'task_worker_num' => 1,
-                           'max_request'     => 500,
-                           'dispatch_mode'   => 2,
-                           'daemonize'       => 0]];
+return ['process_name'    => 'swoole-yii2',
+        'ip'              => '0.0.0.0',
+        'port'            => 18330,
+        'worker_num'      => 2,
+        'task_worker_num' => 1,
+        'pid_file'        => __DIR__ . '/../bin/server.pid',
+        //
+        'max_request'     => 1,
+        'dispatch_mode'   => 2,
+        'daemonize'       => 0,
+        'log_file'        => __DIR__ . '/../logs/sw.log'];

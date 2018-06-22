@@ -43,7 +43,7 @@ $config = [
 //            'enablePrettyUrl'     => true,
 //            'enableStrictParsing' => false
 //        ],
-        // restful conf
+        // restful
         'urlManager' => [
             'enablePrettyUrl'     => true,
             'enableStrictParsing' => true,

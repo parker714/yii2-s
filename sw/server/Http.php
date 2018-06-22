@@ -4,32 +4,37 @@
  */
 namespace app\sw\server;
 
+use app\sw\Application;
+
 class Http {
-    /**
-     * @var 应用实例
-     */
-    private $_app;
-    /**
-     * @var sw配置信息
-     */
-    private $_swConf;
-    /**
-     * @var sw http server
-     */
     private $_http;
+    private $_app;
+    private $_swConf;
+    private $_appConf;
     
     public function onStart($server) {
-        echo "server start".PHP_EOL;
+        echo "[Http Server {$this->_swConf['ip']}:{$this->_swConf['port']}] Start.\n";
         @swoole_set_process_name($this->_swConf['process_name']);
     }
     
     public function onWorkerStart($server, $workerId) {
-        echo "server worker start #{$workerId}".PHP_EOL;
+        if($server->taskworker){
+            echo "[Task Worker #{$workerId}] Start #{$workerId}.\n";
+        }else{
+            echo "[Worker #{$workerId}] Start #{$workerId}.\n";
+        }
+    
+        @swoole_set_process_name($this->_swConf['process_name']);
+        $this->_app = new Application($this->_appConf);
         $this->_app->sw->setSwServer($server);
     }
     
     public function onRequest($request, $response) {
-        $this->setAppRunEnv($request, $response);
+        $this->_app->request->setSwRequest($request);
+        $this->_app->response->setSwResponse($response);
+        
+        $this->_app->response->clear();
+        $this->_app->request->setRequestEnv();
         $this->_app->run();
     }
     
@@ -37,23 +42,26 @@ class Http {
         try{
             call_user_func(...$data);
         }catch (\Exception $e){
-            echo 'task error: '.$e->getMessage().PHP_EOL;
+            echo "[Task Worker #{$taskId}] Exception:\n";
+            echo "[Task Worker #{$taskId}] file: {$e->getFile()}\n";
+            echo "[Task Worker #{$taskId}] line: {$e->getLine()}\n";
+            echo "[Task Worker #{$taskId}] msg:  {$e->getMessage()}\n";
         }
         $server->finish($data);
     }
     
     public function onFinish($server, $taskId, $data){
-        echo 'task finish.'.PHP_EOL;
+        echo "[Task Worker #{$taskId}] Finish.\n";
     }
     
     /**
      * 入口函数
-     * @param $swConf sw 配置
-     * @param $app 应用实例
+     * @param $swConf
+     * @param $appConf
      */
-    public function run($swConf, $app) {
+    public function run($swConf, $appConf) {
         $this->_swConf = $swConf;
-        $this->_app = $app;
+        $this->_appConf = $appConf;
         
         $this->_http = new \swoole_http_server($this->_swConf['ip'], $this->_swConf['port']);
         $this->_http->on('start', [$this,'onStart']);
@@ -61,21 +69,8 @@ class Http {
         $this->_http->on('request', [$this,'onRequest']);
         $this->_http->on('task', [$this, 'onTask']);
         $this->_http->on('finish', [$this, 'onFinish']);
-        $this->_http->set($this->_swConf['server']);
+        $this->_http->set($this->_swConf);
         
         $this->_http->start();
-    }
-    
-    /**
-     * 设置应用环境
-     * @param $request  sw request对象
-     * @param $response sw response对象
-     */
-    public function setAppRunEnv($request, $response) {
-        $this->_app->request->setSwRequest($request);
-        $this->_app->response->setSwResponse($response);
-        
-        $this->_app->response->clear();
-        $this->_app->request->setRequestEnv();
     }
 }

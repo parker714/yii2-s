@@ -16,9 +16,6 @@ class Response extends \yii\web\Response
         return $this->_swResponse;
     }
     
-    /**
-     *  重写发送头
-     */
     public function sendHeaders()
     {
         $headers = $this->getHeaders();
@@ -33,16 +30,11 @@ class Response extends \yii\web\Response
         $this->_swResponse->status($this->getStatusCode());
     }
     
-    /**
-     * 重写发送内容
-     */
     public function sendContent()
     {
         if ($this->stream === null) {
             if ($this->content) {
                 $this->_swResponse->end($this->content);
-            } else {
-                $this->_swResponse->end();
             }
             
             return;

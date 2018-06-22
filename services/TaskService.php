@@ -6,7 +6,8 @@ namespace app\services;
 
 class TaskService {
     public static function sendEmail($userId){
-        //sleep(3);
-        var_dump("task: send {$userId} email");
+        // 模拟耗时
+        sleep(3);
+        echo "task: send email #{$userId} ";
     }
 }

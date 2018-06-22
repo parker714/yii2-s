@@ -13,19 +13,16 @@ class Request extends \yii\web\Request {
         return $this->_swRequest;
     }
     
-    /**
-     * 设置请求环境
-     */
     public function setRequestEnv() {
-        $this->getHeaders()->removeAll();
-        $this->setQueryParams(null);
-        $this->setBodyParams(null);
-
-        $_SERVER['REQUEST_METHOD'] = $this->_swRequest->server['request_method'];
         foreach ($this->_swRequest->header as $name => $value) {
-            $this->getHeaders()->set($name, $value);
+            $this->getHeaders()
+                 ->add($name, $value);
         }
-        $this->setQueryParams($this->_swRequest->get);
+        
+        $_GET                      = isset($this->_swRequest->get) ? $this->_swRequest->get : [];
+        $_SERVER['REQUEST_METHOD'] = $this->_swRequest->server['request_method'];
+        
+        $this->setBodyParams(null);
         $this->setRawBody($this->_swRequest->rawContent());
         
         $this->setPathInfo($this->_swRequest->server['path_info']);

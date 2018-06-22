@@ -5,12 +5,14 @@ namespace app\components;
 use Yii;
 use app\exceptions\Base;
 use yii\base\ErrorException;
-use yii\base\ExitException;
 
 class ErrorHandler extends \yii\base\ErrorHandler {
+    public $prodCode = 10000;
+    public $prodMsg  = 'system busy';
+    
     public function renderException($exception) {
-        $data = ['code' => 10000,
-                 'msg'  => 'system busy'];
+        $data = ['code' => $this->prodCode,
+                 'msg'  => $this->prodMsg];
         
         if ($exception instanceof Base) {
             $data['code'] = $exception->getCode();
@@ -18,10 +20,10 @@ class ErrorHandler extends \yii\base\ErrorHandler {
         }
         
         if (YII_DEBUG) {
-            $data['debug'] = ['code' => $exception->getCode(),
-                              'msg'  => $exception->getMessage(),
+            $data['debug'] = ['requestRoute' => Yii::$app->requestedRoute,
                               'file' => $exception->getFile(),
-                              'line' => $exception->getLine()];
+                              'line' => $exception->getLine(),
+                              'msg'  => $exception->getMessage()];
         }
         
         Yii::$app->response->data = $data;
@@ -29,53 +31,34 @@ class ErrorHandler extends \yii\base\ErrorHandler {
     }
     
     public function handleException($exception) {
-        if ($exception instanceof ExitException) {
-            return;
-        }
-        
-        $this->exception = $exception;
         $this->renderException($exception);
-        $this->exception = null;
     }
     
     public function handleError($code, $message, $file, $line) {
-        if (error_reporting() & $code) {
-            // load ErrorException manually here because autoloading them will not work
-            // when error occurs while autoloading a class
-            if (!class_exists('yii\\base\\ErrorException', false)) {
-                require_once Yii::getAlias('@yii/base/ErrorException.php');
+        if (!class_exists('yii\\base\\ErrorException', false)) {
+            require_once Yii::getAlias('@yii/base/ErrorException.php');
+        }
+        $exception = new ErrorException($message, $code, $code, $file, $line);
+        
+        // in case error appeared in __toString method we can't throw any exception
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        array_shift($trace);
+        foreach ($trace as $frame) {
+            if ($frame['function'] === '__toString') {
+                $this->handleException($exception);
             }
-            $exception = new ErrorException($message, $code, $code, $file, $line);
-            
-            // in case error appeared in __toString method we can't throw any exception
-            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            array_shift($trace);
-            
-            foreach ($trace as $frame) {
-                if ($frame['function'] === '__toString') {
-                    $this->handleException($exception);
-                    //exit(1);
-                }
-            }
-            
-            throw $exception;
         }
         
-        return false;
+        throw $exception;
     }
     
     public function handleFatalError() {
-        // load ErrorException manually here because autoloading them will not work
-        // when error occurs while autoloading a class
         if (!class_exists('yii\\base\\ErrorException', false)) {
             require_once Yii::getAlias('@yii/base/ErrorException.php');
         }
         
-        $error = error_get_last();
-        if (ErrorException::isFatalError($error)) {
-            $exception       = new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
-            $this->exception = $exception;
-            $this->renderException($exception);
-        }
+        $error     = error_get_last();
+        $exception = new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
+        $this->renderException($exception);
     }
 }

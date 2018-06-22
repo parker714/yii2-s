@@ -15,10 +15,10 @@ class Sw extends Component {
     }
     
     /**
-     * 执行异步
-     * @param mixed ...$paramArr 与call_func_user()参数一致
+     * 异步任务
+     * @param mixed ...$params 与call_func_user()参数一致
      */
-    public function task(...$paramArr){
-        $this->_swServer->task($paramArr);
+    public function task(...$params){
+        $this->_swServer->task($params);
     }
 }
