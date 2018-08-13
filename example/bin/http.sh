@@ -1,5 +1,5 @@
-process_name="swoole-yii2"
-bin="/data/apps/swoole-yii2/bin/sw"
+process_name="yii2-s"
+bin="/data/apps/yii2-s/bin/sw"
 
 case $1 in
 start)
@@ -13,6 +13,6 @@ reload)
     $bin
     ;;
 *)
-    echo "Usage  : sh http.sh [start | stop | reload]"
+    echo "Usage: sh http.sh [start | stop | reload]"
     ;;
 esac

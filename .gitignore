@@ -1,4 +1,10 @@
 .idea
+
+# project
 vendor
 composer.lock
+
+# example
+example/bin/server.pid
+example/bin/sw.log
 example/runtime
