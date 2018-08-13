@@ -1,7 +1,7 @@
 <?php
 
 $config = [
-    'id'         => 20000,
+    'id'         => 757,
     'name'       => 'yii2-s',
     'basePath'   => dirname(__DIR__),
     'bootstrap'  => ['log'],

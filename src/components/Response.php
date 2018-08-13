@@ -52,6 +52,5 @@ class Response extends \yii\web\Response {
             }
         }
         $this->_swResponse->status($this->getStatusCode());
-        $this->sendCookies();
     }
 }

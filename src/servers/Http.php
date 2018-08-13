@@ -5,14 +5,10 @@ use Yii;
 use degree757\yii2s\Application;
 
 class Http {
-    private $_http;
     private $_swConf;
     private $_appConf;
     
-    public function onStart($server) {
-        @swoole_set_process_name($this->_swConf['process_name']);
-        echo "[Http Server {$this->_swConf['ip']}:{$this->_swConf['port']}] Start.\n";
-    }
+    private $_http;
     
     public function onWorkerStart($server, $workerId) {
         @swoole_set_process_name($this->_swConf['process_name']);
@@ -37,34 +33,38 @@ class Http {
             call_user_func(...$data);
             $server->finish($data);
         }catch (\Exception $e){
-            echo "[Task Worker #{$taskId}] Exception:\n";
-            echo "[Task Worker #{$taskId}] err_file: {$e->getFile()}\n";
-            echo "[Task Worker #{$taskId}] err_line: {$e->getLine()}\n";
-            echo "[Task Worker #{$taskId}] err_msg:  {$e->getMessage()}\n";
+            echo "[Task #{$taskId} srcWorkerId #{$srcWorkerId}] Exception:\n";
+            echo "[Task #{$taskId} srcWorkerId #{$srcWorkerId}] err_file : {$e->getFile()}\n";
+            echo "[Task #{$taskId} srcWorkerId #{$srcWorkerId}] err_line : {$e->getLine()}\n";
+            echo "[Task #{$taskId} srcWorkerId #{$srcWorkerId}] err_msg  : {$e->getMessage()}\n";
+            echo "[Task #{$taskId} srcWorkerId #{$srcWorkerId}] err_trace: {$e->getTraceAsString()}\n";
         }
     }
     
     public function onFinish($server, $taskId, $data){
-        echo "[Task Worker #{$taskId}] Finish.\n";
+        echo "[Task #{$taskId}] Finish,data is ".json_encode($data)."\n";
     }
     
     /**
      * Http constructor.
      *
      * @param $swConf
-     * @param $appConf
      */
-    public function __construct($swConf, $appConf) {
+    public function __construct($swConf) {
         $this->_swConf = $swConf;
-        $this->_appConf = $appConf;
+        @swoole_set_process_name($this->_swConf['process_name']);
     }
     
     /**
      * Main func
+     *
+     * @param $appConf
      */
-    public function run() {
+    public function run($appConf) {
+        echo "[Http Server {$this->_swConf['ip']}:{$this->_swConf['port']}] Start.\n";
+        $this->_appConf = $appConf;
+        
         $this->_http = new \swoole_http_server($this->_swConf['ip'], $this->_swConf['port']);
-        $this->_http->on('start', [$this,'onStart']);
         $this->_http->on('WorkerStart', [$this,'onWorkerStart']);
         $this->_http->on('request', [$this,'onRequest']);
         $this->_http->on('task', [$this, 'onTask']);
