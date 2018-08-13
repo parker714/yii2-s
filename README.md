@@ -12,9 +12,9 @@ cp -R vendor/degree757/yii2-s/example ./
 php example/bin/sw.php
 ```
 
-# project ideas
+### project ideas
 course：  [course.md](/course.md)<br>
 yiichina：https://www.yiichina.com/tutorial/1641
 
-#wechat<br>
+### wechat<br>
 <img src="https://github.com/degree757/yii2-s/blob/master/pay.png?raw=true" width = "300" height = "300" />
