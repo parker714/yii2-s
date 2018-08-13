@@ -1,5 +1,0 @@
-.idea/
-composer.lock
-runtime/
-vendor/
-bin/server.pid

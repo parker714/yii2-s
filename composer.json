@@ -1,16 +1,21 @@
 {
-  "name": "degree66/swoole-yii2",
-  "description": "swoole yii2",
-  "type": "project",
-  "license": "Apache-2.0",
-  "keywords": [
-    "yii2",
-    "swoole"
+  "name": "degree757/yii2-s",
+  "description": "speed up yii2 by swoole",
+  "keywords": ["yii2", "swoole"],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "degree757",
+      "email": "degree757@qq.com"
+    }
   ],
   "require": {
     "yiisoft/yii2": "~2.0.14"
   },
-  "require-dev": {
-    "yiisoft/yii2-gii": "*"
+  "autoload": {
+    "psr-4": {
+      "degree757\\yii2s\\": "src/"
+    }
   }
 }
