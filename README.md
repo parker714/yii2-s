@@ -12,4 +12,4 @@ course：  [course.md](/course.md)
 yiichina：https://www.yiichina.com/tutorial/1641
 
 #wechat scan
-<img src="https://raw.githubusercontent.com/degree757/swoole-yii2/master/web/pay.png" width = "150" height = "150" />
+<img src="https://github.com/degree757/yii2-s/blob/master/pay.png?raw=true" width = "150" height = "150" />
