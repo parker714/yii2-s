@@ -95,6 +95,8 @@ class Http {
         }
         Yii::$app->request->setQueryParams($request->get);
         Yii::$app->request->setBodyParams($request->post);
-        Yii::$app->request->setRawBody($request->rawContent());
+        
+        $rawContent = $request->rawContent()?:null;
+        Yii::$app->request->setRawBody($rawContent);
     }
 }
