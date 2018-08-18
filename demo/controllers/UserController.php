@@ -14,8 +14,14 @@ class UserController extends Controller {
      * GET /user
      */
     public function actionIndex() {
+        1/0;
+        
+//        while (1){
+//            var_dump("1");
+//        }
         return [
-            ['name' => 'a','age'=>20]
+            'name' => 'a',
+            'age' => 22220
         ];
     }
     

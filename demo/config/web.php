@@ -1,6 +1,12 @@
 <?php
+/**
+ * Yii2 App Conf
+ */
 
-$config = [
+defined('YII_DEBUG') or define('YII_DEBUG', true);// true or false
+defined('YII_ENV') or define('YII_ENV', 'dev');// dev or test or prod
+
+return [
     'id'         => 757,
     'name'       => 'yii2-s',
     'basePath'   => dirname(__DIR__),
@@ -8,6 +14,11 @@ $config = [
     'components' => [
         'errorHandler' => [
             'class' => \degree757\yii2s\components\ErrorHandle::class,
+            'as errorHandler' => [
+                'class' => \degree757\yii2s\behaviors\ErrorResponse::class,
+                'prodCode' => 10000,
+                'prodMsg' => 'system busy'
+            ],
         ],
         'request'      => [
             'class'                => \degree757\yii2s\components\Request::class,
@@ -24,15 +35,14 @@ $config = [
         'sw'      => [
             'class' => \degree757\yii2s\components\Sw::class
         ],
-        'cache'        => [
-            'class' => 'yii\caching\FileCache',
-        ],
         'log'          => [
             'flushInterval' => 1,
             'targets'       => [
                 [
                     'class'          => \yii\log\FileTarget::class,
-                    'exportInterval' => 1
+                    'exportInterval' => 1,
+                    'logVars'        => [],
+                    'levels'         => ['error', 'warning', 'info']
                 ]
             ],
         ],
@@ -50,5 +60,3 @@ $config = [
         ],
     ]
 ];
-
-return $config;

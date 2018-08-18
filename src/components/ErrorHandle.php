@@ -9,37 +9,44 @@ use yii\db\Exception as DbException;
 use yii\helpers\VarDumper;
 
 class ErrorHandle extends ErrorHandler {
+    /**
+     * @event ErrorEvent an event that is triggered at the beginning of [[renderException()]].
+     */
+    const EVENT_BEFORE_RENDER = 'beforeSend';
+    /**
+     * @event ErrorEvent an event that is triggered at the end of [[renderException()]].
+     */
+    const EVENT_AFTER_RENDER = 'afterSend';
+    
+    /**
+     * Get error request env info
+     *
+     * @return array
+     */
+    public function getInfo() {
+        return [
+            'request_info' => Yii::$app->request->getInfo(),
+            'error_code'   => $this->exception->getCode(),
+            'error_file'   => $this->exception->getFile(),
+            'error_line'   => $this->exception->getLine(),
+            'error_msg'    => $this->exception->getMessage(),
+            'error_trace'  => explode(PHP_EOL, $this->exception->getTraceAsString())
+        ];
+    }
+    
     public function renderException($exception) {
+        $this->exception = $exception;
+        
+        $this->trigger(self::EVENT_BEFORE_RENDER);
         if ($exception instanceof DbException) {
             Yii::$app->db->close();
         }
-        
-        $data['code'] = $exception->getCode();
-        $data['msg']  = $exception->getMessage();
-        if (YII_DEBUG) {
-            $data['debug'] = $this->getInfo();
-        }
-        
-        Yii::$app->response->data = $data;
-        Yii::$app->response->send();
-    }
-    
-    public function getInfo(){
-        return ['request_info' => Yii::$app->request->getInfo(),
-                'error_code'   => $this->exception->getCode(),
-                'error_file'   => $this->exception->getFile(),
-                'error_line'   => $this->exception->getLine(),
-                'error_msg'    => $this->exception->getMessage(),
-                'error_trace'  => explode(PHP_EOL, $this->exception->getTraceAsString())];
+        $this->trigger(self::EVENT_AFTER_RENDER);
     }
     
     public function handleException($exception) {
         $this->exception = $exception;
         try {
-            $this->logException($exception);
-            if ($this->discardExistingOutput) {
-                $this->clearOutput();
-            }
             $this->renderException($exception);
         } catch (\Exception $e) {
             $this->handleFallbackExceptionMessage($e, $exception);
@@ -51,7 +58,7 @@ class ErrorHandle extends ErrorHandler {
     }
     
     public function handleError($code, $message, $file, $line) {
-        if (error_reporting() & $code) {
+        if ($code) {
             if (!class_exists('yii\\base\\ErrorException', false)) {
                 require_once Yii::getAlias('@yii/base/ErrorException.php');
             }
@@ -67,8 +74,7 @@ class ErrorHandle extends ErrorHandler {
             }
             throw $exception;
         }
-        
-        return false;
+        throw new \Exception('Unknown error type');
     }
     
     public function handleFatalError() {
@@ -78,19 +84,16 @@ class ErrorHandle extends ErrorHandler {
         
         $error = error_get_last();
         if (ErrorException::isFatalError($error)) {
-            $exception       = new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
-            $this->exception = $exception;
-            
-            $this->logException($exception);
-            
-            if ($this->discardExistingOutput) {
-                $this->clearOutput();
-            }
-            $this->renderException($exception);
-            
-            Yii::getLogger()
-               ->flush(true);
+            $exception = new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']);
         }
+        else {
+            $exception = new ErrorException('Unknown error type');
+        }
+        $this->exception = $exception;
+        $this->renderException($exception);
+        
+        Yii::getLogger()
+           ->flush(true);
     }
     
     public function handleFallbackExceptionMessage($exception, $previousException) {
@@ -98,18 +101,6 @@ class ErrorHandle extends ErrorHandler {
         $msg .= (string)$exception;
         $msg .= "\nPrevious exception:\n";
         $msg .= (string)$previousException;
-        if (YII_DEBUG) {
-            if (PHP_SAPI === 'cli') {
-                echo $msg . "\n";
-            }
-            else {
-                echo '<pre>' . htmlspecialchars($msg, ENT_QUOTES, Yii::$app->charset) . '</pre>';
-            }
-        }
-        else {
-            echo 'An internal server error occurred.';
-        }
-        $msg .= "\n\$_SERVER = " . VarDumper::export($_SERVER);
-        error_log($msg);
+        throw new \Exception($msg);
     }
 }
