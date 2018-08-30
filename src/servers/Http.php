@@ -8,17 +8,20 @@ namespace degree757\yii2s\servers;
 use Yii;
 
 class Http extends Server {
+    /**
+     * sw Http events
+     *
+     * @var array
+     */
     public $swEvents = ['Request'];
     
-    public function setSwServer() {
+    public function getSwServer() {
         return new \swoole_http_server($this->ip, $this->port);
     }
     
     public function onWorkerStart($server, $workerId) {
         parent::onWorkerStart($server, $workerId);
-        
-        call_user_func($this->workerStartCb);
-        Yii::$app->sw->setSwServer($server);
+        call_user_func($this->workerStartCb, $server, $workerId);
     }
     
     public function onRequest($request, $response) {
@@ -26,6 +29,11 @@ class Http extends Server {
         Yii::$app->run();
     }
     
+    /**
+     * Set Yii2 App Run Env
+     * @param $request
+     * @param $response
+     */
     public function setAppRunEnv($request, $response) {
         Yii::$app->request->setSwRequest($request);
         Yii::$app->response->setSwResponse($response);

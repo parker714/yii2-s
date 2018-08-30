@@ -6,16 +6,34 @@
 namespace degree757\yii2s\servers;
 
 class Dispatcher {
+    /**
+     * Sw server
+     * @var Server
+     */
     public $server;
     
+    /**
+     * Dispatcher constructor.
+     *
+     * @param $conf
+     *
+     * @throws \ReflectionException
+     */
     public function __construct($conf) {
-        $this->server = new $conf['class']($conf);
+        $reflection   = new \ReflectionClass($conf['class']);
+        $this->server = $reflection->newInstance();
+        foreach ($conf as $name => $value) {
+            $this->server->$name = $value;
+        }
     }
     
+    /**
+     * Dispatcher Run
+     */
     public function run() {
         global $argv;
         
-        $pidFile = $this->server->getPid();
+        $pidFile = $this->server->getPidFile();
         $pid     = file_exists($pidFile) ? file_get_contents($pidFile) : null;
         
         $command = isset($argv[1]) ? $argv[1] : null;
@@ -24,7 +42,7 @@ class Dispatcher {
                 if (!is_null($pid) && posix_kill($pid, 0)) {
                     exit('server already start.');
                 }
-                $this->server->start();
+                $this->server->run();
                 break;
             case 'stop':
                 if (!is_null($pid)) {
@@ -40,7 +58,7 @@ class Dispatcher {
                 }
                 break;
             default:
-                print_r("yii2-s Usage:\n\tphp http.php start|stop|reload\n");
+                print_r("yii2-s Usage:\n\tbin/http start|stop|reload\n");
         }
     }
 }

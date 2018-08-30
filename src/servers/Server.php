@@ -9,27 +9,19 @@ abstract class Server {
     public $swServer;
     public $swEvents;
     
-    public $process_name;
+    public $processName;
     public $ip;
     public $port;
     public $set;
     
     public $workerStartCb;
     
-    public function __construct($conf) {
-        $this->process_name  = $conf['process_name'];
-        $this->ip            = $conf['ip'];
-        $this->port          = $conf['port'];
-        $this->set           = $conf['set'];
-        $this->workerStartCb = $conf['workerStartCb'];
-    }
-    
-    public function getPid() {
+    public function getPidFile() {
         return $this->set['pid_file'];
     }
     
     public function onWorkerStart($server, $workerId) {
-        @swoole_set_process_name($this->process_name);
+        @swoole_set_process_name($this->processName);
         
         if ($server->taskworker) {
             $this->dump("Task Worker Start #{$workerId}");
@@ -58,16 +50,17 @@ abstract class Server {
         $this->dump("[Task #{$taskId}] Finish,data is " . json_encode($data));
     }
     
-    public function start() {
+    public function run() {
         $this->dump("Server {$this->ip}:{$this->port} Start");
+        @swoole_set_process_name($this->processName);
         
-        $this->swServer = $this->setSwServer();
+        $this->swServer = $this->getSwServer();
         $this->swServer->set($this->set);
         $this->bindEvents();
         $this->swServer->start();
     }
     
-    abstract public function setSwServer();
+    abstract public function getSwServer();
     
     public function bindEvents() {
         $this->swServer->on('WorkerStart', [
