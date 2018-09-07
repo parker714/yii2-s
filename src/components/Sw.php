@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Sw
+ */
 namespace degree757\yii2s\components;
 
 use yii\base\Component;
@@ -9,6 +11,10 @@ class Sw extends Component {
     
     public function setSwServer($server) {
         $this->_swServer = $server;
+    }
+    
+    public function getSwServer(){
+        return $this->_swServer;
     }
     
     /**

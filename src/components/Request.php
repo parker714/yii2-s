@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Request
+ */
 namespace degree757\yii2s\components;
 
 class Request extends \yii\web\Request {
@@ -13,6 +15,11 @@ class Request extends \yii\web\Request {
         return $this->_swRequest;
     }
     
+    /**
+     * get request info
+     * @return array
+     * @throws \yii\base\InvalidConfigException
+     */
     public function getInfo() {
         return ['path_info' => $this->getPathInfo(),
                 'method'    => $this->getMethod(),

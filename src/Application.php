@@ -4,6 +4,9 @@ namespace degree757\yii2s;
 use Yii;
 
 class Application extends \yii\web\Application {
+    /**
+     * rewrite run
+     */
     public function run() {
         try {
             $this->state = self::STATE_BEFORE_REQUEST;

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Response
+ */
 namespace degree757\yii2s\components;
 
 class Response extends \yii\web\Response {
@@ -13,6 +15,9 @@ class Response extends \yii\web\Response {
         return $this->_swResponse;
     }
     
+    /**
+     * rewrite sendContent
+     */
     public function sendContent() {
         if ($this->stream === null) {
             $this->_swResponse->end($this->content);
@@ -42,6 +47,9 @@ class Response extends \yii\web\Response {
         $this->_swResponse->end();
     }
     
+    /**
+     * rewrite sendHeaders
+     */
     public function sendHeaders() {
         $headers = $this->getHeaders();
         if ($headers->count > 0) {

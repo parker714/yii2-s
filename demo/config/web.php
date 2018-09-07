@@ -13,26 +13,29 @@ return [
     'bootstrap'  => ['log'],
     'components' => [
         'errorHandler' => [
-            'class' => \degree757\yii2s\components\ErrorHandle::class,
-            'as errorHandler' => [
-                'class' => \degree757\yii2s\behaviors\ErrorResponse::class,
+            'class'            => \degree757\yii2s\components\ErrorHandle::class,
+            'as errorResponse' => [
+                'class'    => \degree757\yii2s\behaviors\ErrorResponse::class,
                 'prodCode' => 10000,
-                'prodMsg' => 'system busy'
+                'prodMsg'  => 'system busy'
             ],
         ],
         'request'      => [
             'class'                => \degree757\yii2s\components\Request::class,
             'cookieValidationKey'  => 'pb!@#$%^&*()',
             'enableCsrfValidation' => false,
-            'parsers' => [
+            'parsers'              => [
                 'application/json' => 'yii\web\JsonParser'
             ]
         ],
         'response'     => [
-            'class'       => \degree757\yii2s\components\Response::class,
-            'format'      => \yii\web\Response::FORMAT_JSON
+            'class'          => \degree757\yii2s\components\Response::class,
+            'format'         => \yii\web\Response::FORMAT_JSON,
+            'as responseLog' => [
+                'class' => \degree757\yii2s\behaviors\ResponseLog::class
+            ]
         ],
-        'sw'      => [
+        'sw'           => [
             'class' => \degree757\yii2s\components\Sw::class
         ],
         'log'          => [
@@ -42,7 +45,11 @@ return [
                     'class'          => \yii\log\FileTarget::class,
                     'exportInterval' => 1,
                     'logVars'        => [],
-                    'levels'         => ['error', 'warning', 'info']
+                    'levels'         => [
+                        'error',
+                        'warning',
+                        'info'
+                    ]
                 ]
             ],
         ],
@@ -52,9 +59,9 @@ return [
             'showScriptName'      => false,
             'rules'               => [
                 [
-                    'class'         => \yii\rest\UrlRule::class,
-                    'pluralize'     => false,
-                    'controller'    => ['user']
+                    'class'      => \yii\rest\UrlRule::class,
+                    'pluralize'  => false,
+                    'controller' => ['user']
                 ]
             ],
         ],

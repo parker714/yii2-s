@@ -25,16 +25,16 @@ class ErrorResponse extends Behavior {
     
     public function events() {
         return [
-            ErrorHandle::EVENT_BEFORE_RENDER => 'beforeRender'
+            ErrorHandle::EVENT_AFTER_RENDER => 'afterRender'
         ];
     }
     
-    public function beforeRender() {
+    public function afterRender() {
         $exception = $this->owner->exception;
         
         $data['code']  = $exception->getCode();
         $data['msg']   = $exception->getMessage();
-        $data['debug'] = $this->owner->getInfo();
+        $data['debug'] = self::getDebugInfo($exception);
         Yii::error($data);
         
         if (YII_ENV_PROD) {
@@ -45,5 +45,22 @@ class ErrorResponse extends Behavior {
         
         Yii::$app->response->data = $data;
         Yii::$app->response->send();
+    }
+    
+    /**
+     * Get error request env info
+     * @param $exception
+     *
+     * @return array
+     */
+    public static function getDebugInfo($exception) {
+        return [
+            'request_info' => Yii::$app->request->getInfo(),
+            'error_code'   => $exception->getCode(),
+            'error_file'   => $exception->getFile(),
+            'error_line'   => $exception->getLine(),
+            'error_msg'    => $exception->getMessage(),
+            'error_trace'  => explode(PHP_EOL, $exception->getTraceAsString())
+        ];
     }
 }
