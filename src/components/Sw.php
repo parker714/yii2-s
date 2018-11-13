@@ -1,6 +1,6 @@
 <?php
 /**
- * Sw
+ * Sw Component
  */
 namespace degree757\yii2s\components;
 

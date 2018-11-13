@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  yii2-s:
+    image: "degree757/swoole:1.10"
+    ports:
+      - "18757:18757"
+    volumes:
+      - "/Users/pb/Work/yii2-s:/yii2-s"
+    command:
+      ["php","/yii2-s/demo/bin/http","start"]

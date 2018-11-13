@@ -10,11 +10,11 @@ composer -vvv require degree757/yii2-s
 ```
 cp -R vendor/degree757/yii2-s/demo ./
 ./demo/bin/http start
+
 ```
 
 >### Project Course
 course：  [course.md](/course.md)<br>
-~~yiichina：https://www.yiichina.com/tutorial/1641~~
 >
 >### Scan QrCode<br>
 <img src="https://github.com/degree757/yii2-s/blob/master/pay.png?raw=true" width = "300" height = "300" />

@@ -3,7 +3,7 @@
 /**
  * Start Script
  * Usage:
- *   php http.php start|reload|stop
+ *   ./http start|reload|stop
  */
 
 require(__DIR__ . '/../../vendor/autoload.php');

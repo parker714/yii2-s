@@ -14,18 +14,9 @@ class UserController extends Controller {
                 'class'   => ParamsValidate::class,
                 'data'    => array_merge(Yii::$app->request->get(), Yii::$app->request->post()),
                 'rules'   => [
-                    '*'           => [
-                        [
-                            'param1',
-                            'required'
-                        ]
-                    ],
                     'user/create' => [
                         [
-                            [
-                                'param2',
-                                'email'
-                            ],
+                            'email',
                             'required'
                         ],
                         [
@@ -45,25 +36,28 @@ class UserController extends Controller {
      * GET /user
      */
     public function actionIndex() {
-        //        while (1){
-        //            var_dump("1");
-        //        }
+        // async
+        Yii::$app->sw->task([
+            'app\services\EmailService',
+            'sendEmail'
+        ], 1, "hello");
+        
         return [
-            'name' => 'a',
-            'age'  => 22220
+            Yii::$app->request->get(),
+            Yii::$app->request->post()
         ];
     }
     
     /**
      * POST /user
+     *
+     * @return array
+     * @CreateTime 2018/11/13 19:00:25
      */
     public function actionCreate() {
-        // async
-        //        Yii::$app->sw->task([
-        //            'app\services\UserService',
-        //            'sendEmail'
-        //        ], 1001);
-        
-        return Yii::$app->request->getInfo();
+        return [
+            Yii::$app->request->get(),
+            Yii::$app->request->post()
+        ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * ErrorHandle
+ * ErrorHandle Component
  */
 namespace degree757\yii2s\components;
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Response
+ * Response Component
  */
 namespace degree757\yii2s\components;
 
