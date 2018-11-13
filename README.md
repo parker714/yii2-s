@@ -10,11 +10,13 @@ composer -vvv require degree757/yii2-s
 ```
 cp -R vendor/degree757/yii2-s/demo ./
 ./demo/bin/http start
-
 ```
 
->### Project Course
+## docker
+[docker-compose](https://github.com/degree757/yii2-s/blob/master/demo/docker-compose.yml)
+
+### Project Course
 course：  [course.md](/course.md)<br>
->
->### Scan QrCode<br>
+
+### Scan QrCode<br>
 <img src="https://github.com/degree757/yii2-s/blob/master/pay.png?raw=true" width = "300" height = "300" />
