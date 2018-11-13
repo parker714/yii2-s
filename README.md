@@ -15,8 +15,8 @@ cp -R vendor/degree757/yii2-s/demo ./
 ## docker
 [docker-compose](https://github.com/degree757/yii2-s/blob/master/demo/docker-compose.yml)
 
-### Project Course
-course：  [course.md](/course.md)<br>
+## course
+[course.md](https://www.jianshu.com/p/9c2788ccf3c0)
 
-### Scan QrCode<br>
+## Scan QrCode<br>
 <img src="https://github.com/degree757/yii2-s/blob/master/pay.png?raw=true" width = "300" height = "300" />
