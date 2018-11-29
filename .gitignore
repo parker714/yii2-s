@@ -4,7 +4,8 @@
 vendor
 composer.lock
 
-# example
-demo/bin/server.pid
-demo/bin/sw.log
-demo/runtime
+# demo
+demo/http/bin/server.pid
+demo/http/bin/sw.log
+demo/http/runtime
+demo/tcp/runtime

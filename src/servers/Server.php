@@ -67,10 +67,6 @@ abstract class Server {
             $this,
             'onWorkerStart'
         ]);
-        $this->swServer->on('request', [
-            $this,
-            'onRequest'
-        ]);
         $this->swServer->on('task', [
             $this,
             'onTask'

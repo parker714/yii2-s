@@ -11,7 +11,7 @@ return [
     'set'           => [
         'worker_num'      => 1,
         'task_worker_num' => 1,
-        'max_request'     => 1000,
+        'max_request'     => 1,
         'dispatch_mode'   => 3,
         'daemonize'       => 0,
         'pid_file'        => __DIR__ . '/../bin/server.pid',
@@ -19,7 +19,7 @@ return [
     ],
     'workerStartCb' => function ($server, $workerId) {
         $appConf = require(__DIR__ . '/web.php');
-        require(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
+        require(__DIR__ . '/../../../vendor/yiisoft/yii2/Yii.php');
         
         new \degree757\yii2s\Application($appConf);
         Yii::$app->sw->setSwServer($server);

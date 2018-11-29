@@ -36,12 +36,6 @@ class UserController extends Controller {
      * GET /user
      */
     public function actionIndex() {
-        // async
-        Yii::$app->sw->task([
-            'app\services\EmailService',
-            'sendEmail'
-        ], 1, "hello");
-        
         return [
             Yii::$app->request->get(),
             Yii::$app->request->post()
@@ -55,6 +49,12 @@ class UserController extends Controller {
      * @CreateTime 2018/11/13 19:00:25
      */
     public function actionCreate() {
+        // async
+        Yii::$app->sw->task([
+            'app\services\UserService',
+            'sendEmail'
+        ], 1, "hello");
+        
         return [
             Yii::$app->request->get(),
             Yii::$app->request->post()
