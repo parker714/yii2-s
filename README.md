@@ -32,6 +32,3 @@ services:
     command:
       ["php","/yii2-s/demo/http/bin/http","start"]
 ```
-
-## course
-[course.md](https://www.jianshu.com/p/9c2788ccf3c0)
