@@ -1,12 +1,15 @@
 {
   "name": "degree757/yii2-s",
-  "description": "speed up yii2 by swoole",
-  "keywords": ["yii2", "swoole"],
+  "description": "speed up yii2 app by swoole",
+  "keywords": [
+    "yii2",
+    "swoole"
+  ],
   "type": "yii2-extension",
   "license": "MIT",
   "authors": [
     {
-      "name": "degree757",
+      "name": "pb",
       "email": "degree757@qq.com"
     }
   ],
@@ -15,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "degree757\\yii2s\\": "src/"
+      "degree757\\yii2s\\": ""
     }
   }
 }

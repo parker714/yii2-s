@@ -1,7 +1,4 @@
 <?php
-/**
- * Params validate
- */
 
 namespace degree757\yii2s\behaviors;
 
@@ -11,7 +8,12 @@ use yii\base\Controller;
 use yii\base\DynamicModel;
 use yii\helpers\StringHelper;
 
-class ParamsValidate extends Behavior {
+/**
+ * Class ParamsValidate
+ * @package degree757\yii2s\behaviors
+ */
+class ParamsValidate extends Behavior
+{
     /**
      * validate data
      * ```
@@ -45,7 +47,7 @@ class ParamsValidate extends Behavior {
      * @var array
      */
     public $rules = [];
-    
+
     /**
      * err Func
      *
@@ -63,46 +65,50 @@ class ParamsValidate extends Behavior {
      * @var
      */
     public $errFunc;
-    
+
     private $_validateKey = [];
-    
-    public function events() {
+
+    public function events()
+    {
         return [
-            Controller::EVENT_BEFORE_ACTION => 'eventBeforeAction'
+            Controller::EVENT_BEFORE_ACTION => 'eventBeforeAction',
         ];
     }
-    
+
     /**
      * eventBeforeAction
      *
      * @throws \yii\base\InvalidConfigException
      */
-    public function eventBeforeAction() {
+    public function eventBeforeAction()
+    {
         $url   = rtrim(Yii::$app->controller->action->getUniqueId(), '/');
         $rules = $this->getValidateRules($url);
-        
+
         $this->setValidateKey($rules);
         $this->setValidateVal($this->data);
-        
+
         $DynamicModel = DynamicModel::validateData($this->_validateKey, $rules);
         if ($DynamicModel->hasErrors()) {
             call_user_func($this->errFunc, $DynamicModel->getFirstErrors());
         }
     }
-    
-    public function getValidateRules($url) {
+
+    public function getValidateRules($url)
+    {
         $rule = [];
-        
+
         foreach ($this->rules as $key => $value) {
             if (StringHelper::matchWildcard($key, $url)) {
                 $rule = array_merge($rule, $value);
             }
         }
-        
+
         return $rule;
     }
-    
-    public function setValidateKey($rules) {
+
+    public function setValidateKey($rules)
+    {
         foreach ($rules as $rule) {
             if (is_array($rule[0])) {
                 foreach ($rule[0] as $v) {
@@ -110,12 +116,13 @@ class ParamsValidate extends Behavior {
                 }
                 continue;
             }
-            
+
             $this->_validateKey[$rule[0]] = '';
         }
     }
-    
-    public function setValidateVal($post) {
+
+    public function setValidateVal($post)
+    {
         foreach ($this->_validateKey as $k => $v) {
             if (isset($post[$k])) {
                 $this->_validateKey[$k] = $post[$k];

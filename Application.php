@@ -1,13 +1,21 @@
 <?php
+
 namespace degree757\yii2s;
 
 use Yii;
 
-class Application extends \yii\web\Application {
+/**
+ * Class Application
+ * @package degree757\yii2s
+ */
+class Application extends \yii\web\Application
+{
     /**
-     * rewrite run
+     * Rewrite web app run
+     * @return int
      */
-    public function run() {
+    public function run()
+    {
         try {
             $this->state = self::STATE_BEFORE_REQUEST;
             $this->trigger(self::EVENT_BEFORE_REQUEST);
@@ -24,7 +32,7 @@ class Application extends \yii\web\Application {
             $this->state = self::STATE_END;
 
             return $response->exitStatus;
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Yii::$app->errorHandler->handleException($exception);
         } catch (\Throwable $errorException) {
             Yii::$app->errorHandler->handleException($errorException);

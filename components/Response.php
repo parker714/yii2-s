@@ -1,27 +1,33 @@
 <?php
-/**
- * Response Component
- */
+
 namespace degree757\yii2s\components;
 
-class Response extends \yii\web\Response {
+/**
+ * Class Response
+ * @package degree757\yii2s\components
+ */
+class Response extends \yii\web\Response
+{
     private $_swResponse;
-    
-    public function setSwResponse($response) {
+
+    public function setSwResponse($response)
+    {
         $this->_swResponse = $response;
     }
-    
-    public function getSwResponse() {
+
+    public function getSwResponse()
+    {
         return $this->_swResponse;
     }
-    
+
     /**
      * rewrite sendContent
      */
-    public function sendContent() {
+    public function sendContent()
+    {
         if ($this->stream === null) {
             $this->_swResponse->end($this->content);
-            
+
             return;
         }
         $chunkSize = 2 * 1024 * 1024; // 2MB per chunk swoole limit
@@ -36,8 +42,7 @@ class Response extends \yii\web\Response {
                 //flush(); // Free up memory. Otherwise large files will trigger PHP's memory limit.
             }
             fclose($handle);
-        }
-        else {
+        } else {
             while (!feof($this->stream)) {
                 $this->_swResponse->write(fread($this->stream, $chunkSize));
                 //flush();
@@ -46,11 +51,12 @@ class Response extends \yii\web\Response {
         }
         $this->_swResponse->end();
     }
-    
+
     /**
      * rewrite sendHeaders
      */
-    public function sendHeaders() {
+    public function sendHeaders()
+    {
         $headers = $this->getHeaders();
         if ($headers->count > 0) {
             foreach ($headers as $name => $values) {

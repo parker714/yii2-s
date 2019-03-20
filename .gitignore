@@ -3,9 +3,3 @@
 # project
 vendor
 composer.lock
-
-# demo
-demo/http/bin/server.pid
-demo/http/bin/sw.log
-demo/http/runtime
-demo/tcp/runtime
