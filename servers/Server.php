@@ -20,9 +20,7 @@ abstract class Server
      * Sw server events
      * @var array
      */
-    public $swEvents = ['WorkerStart',
-                        'task',
-                        'finish'];
+    public $swEvents = [];
 
     /**
      * Sw server process name
@@ -46,12 +44,7 @@ abstract class Server
      * Sw server config set, see: https://wiki.swoole.com/wiki/page/274.html
      * @var
      */
-    public $set = [
-        'worker_num'      => 1,
-        'task_worker_num' => 1,
-        'pid_file'        => '@app/server.pid',
-        'log_file'        => '@runtime/sw.log',
-    ];
+    public $set = [];
 
     /**
      * Start sw server
@@ -65,6 +58,20 @@ abstract class Server
         $this->swServer->set($this->set);
         $this->bindEvents();
         $this->swServer->start();
+    }
+
+    /**
+     * Returns the coreSets
+     * @return array
+     */
+    public function coreSets()
+    {
+        return [
+            'worker_num'      => 1,
+            'task_worker_num' => 1,
+            'pid_file'        => '@app/server.pid',
+            'log_file'        => '@runtime/sw.log',
+        ];
     }
 
     abstract public function getSwServer();
@@ -85,6 +92,19 @@ abstract class Server
     }
 
     /**
+     * Returns the coreEvents
+     * @return array
+     */
+    public function coreEvents()
+    {
+        return [
+            'WorkerStart',
+            'task',
+            'finish',
+        ];
+    }
+
+    /**
      * The sw work process starts the callback event
      * @param $server
      * @param $workerId
@@ -92,11 +112,6 @@ abstract class Server
     public function onWorkerStart($server, $workerId)
     {
         @swoole_set_process_name($this->processName);
-
-        // Save sw server in yii2 components，Convenient use of the sw server method
-        if (Yii::$app->has('sw')) {
-            Yii::$app->sw->setSwServer($server);
-        }
 
         if ($server->taskworker) {
             Yii::info("Task Worker Start #{$workerId}");

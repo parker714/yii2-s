@@ -27,7 +27,10 @@ class SwController extends Controller
     {
         parent::init();
 
-        $this->server                  = Yii::createObject($this->server);
+        $this->server = Yii::createObject($this->server);
+
+        $this->server->swEvents        = array_merge($this->server->coreEvents(), $this->server->swEvents);
+        $this->server->set             = array_merge($this->server->coreSets(), $this->server->set);
         $this->server->set['pid_file'] = Yii::getAlias($this->server->set['pid_file']);
         $this->server->set['log_file'] = Yii::getAlias($this->server->set['log_file']);
     }

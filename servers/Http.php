@@ -42,6 +42,11 @@ class Http extends Server
         parent::onWorkerStart($server, $workerId);
 
         new \degree757\yii2s\Application($this->webAppConf);
+
+        // Save sw server in yii2 components，Convenient use of the sw server method
+        if (Yii::$app->has('sw')) {
+            Yii::$app->sw->setSwServer($server);
+        }
     }
 
     /**
