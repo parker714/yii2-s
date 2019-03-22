@@ -11,6 +11,12 @@ use Yii;
 class Http extends Server
 {
     /**
+     * Sw server process name
+     * @var string
+     */
+    public $processName = 'sw-http-server';
+    
+    /**
      * sw http server events
      *
      * @var array

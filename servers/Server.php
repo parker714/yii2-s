@@ -67,7 +67,7 @@ abstract class Server
     public function coreSets()
     {
         return [
-            'worker_num'      => 1,
+            'worker_num'      => 2,
             'task_worker_num' => 1,
             'pid_file'        => '@app/server.pid',
             'log_file'        => '@runtime/sw.log',

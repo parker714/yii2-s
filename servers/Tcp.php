@@ -8,6 +8,16 @@ namespace degree757\yii2s\servers;
  */
 class Tcp extends Server
 {
+    /**
+     * Sw server process name
+     * @var string
+     */
+    public $processName = 'sw-tcp-server';
+
+    /**
+     * Sw tcp server events
+     * @var array
+     */
     public $swEvents = ['WorkerStart',
                         'task',
                         'finish',
