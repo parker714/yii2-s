@@ -20,5 +20,8 @@
     "psr-4": {
       "degree757\\yii2s\\": ""
     }
+  },
+  "extra": {
+    "bootstrap": "degree757\\yii2-s\\Bootstrap"
   }
 }
