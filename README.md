@@ -17,7 +17,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 
 Either run
 
-    composer require degree757/yii2-s
+    composer require degree757/yii2-s -vvv
 
 Usage
 -----
@@ -59,7 +59,7 @@ After installation, you need to modify the configuration and then use it:
     ]
 ...  
 
-# About yii2 restful app conf，sw exception and response are different from php-fpm and need to be rewritten
+# About yii2 restful app conf，sw exception、request、response are different from php-fpm and need to be rewritten
 ...
 'components' => [
     'errorHandler' => [
@@ -75,7 +75,6 @@ After installation, you need to modify the configuration and then use it:
         'class'  => \degree757\yii2s\components\Response::class,
         'format' => \yii\web\Response::FORMAT_JSON,
     ],
-    // Optional component that gets the sw original request object
     'request'      => [
         'class'   => \degree757\yii2s\components\Request::class,
         'parsers' => [
@@ -90,6 +89,9 @@ After installation, you need to modify the configuration and then use it:
 
 # 2.Management server
 ./yii sw-http/server start|stop|reload
+
+# 3.View server
+http://127.0.0.1:18757
 ```
 
 
