@@ -1,10 +1,10 @@
 <?php
 
-namespace degree757\yii2s\servers;
+namespace parker714\yii2s\servers;
 
 /**
  * Class Tcp demo
- * @package degree757\yii2s\servers
+ * @package parker714\yii2s\servers
  */
 class Tcp extends Server
 {

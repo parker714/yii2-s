@@ -1,15 +1,15 @@
 <?php
 
-namespace degree757\yii2s;
+namespace parker714\yii2s;
 
 use Yii;
 use yii\console\Controller;
-use degree757\yii2s\servers\Server;
+use parker714\yii2s\servers\Server;
 use yii\helpers\Console;
 
 /**
  * Class SwController
- * @package degree757\yii2s
+ * @package parker714\yii2s
  */
 class SwController extends Controller
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace degree757\yii2s\components;
+namespace parker714\yii2s\components;
 
 /**
  * Class Response
- * @package degree757\yii2s\components
+ * @package parker714\yii2s\components
  */
 class Response extends \yii\web\Response
 {

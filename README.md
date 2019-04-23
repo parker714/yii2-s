@@ -6,8 +6,8 @@ This extension provides an swoole for [Yii framework 2.0](http://www.yiiframewor
 
 For license information check the [LICENSE](LICENSE.md)-file.
 
-[![Latest Stable Version](https://poser.pugx.org/degree757/yii2-s/v/stable.png)](https://packagist.org/packages/degree757/yii2-s)
-[![Total Downloads](https://poser.pugx.org/degree757/yii2-s/downloads.png)](https://packagist.org/packages/degree757/yii2-s)
+[![Latest Stable Version](https://poser.pugx.org/parker714/yii2-s/v/stable.png)](https://packagist.org/packages/parker714/yii2-s)
+[![Total Downloads](https://poser.pugx.org/parker714/yii2-s/downloads.png)](https://packagist.org/packages/parker714/yii2-s)
 
 
 Installation
@@ -31,10 +31,10 @@ After installation, you need to modify the configuration and then use it:
 'controllerMap' => [
     'sw-http' => [
         // Sw service scheduling
-        'class'  => \degree757\yii2s\SwController::class,
+        'class'  => \parker714\yii2s\SwController::class,
         'server' => [
             // Sw tcp、http service implementation
-            'class'      => \degree757\yii2s\servers\Http::class,
+            'class'      => \parker714\yii2s\servers\Http::class,
             // Yii2 restful app conf
             'webAppConf' => require(__DIR__ . '/web.php'),
             
@@ -51,10 +51,10 @@ After installation, you need to modify the configuration and then use it:
     ],
     // Another example
     'sw-tcp' => [
-        'class' => \degree757\yii2s\SwController::class,
+        'class' => \parker714\yii2s\SwController::class,
         'server' => [
             // Or use a subclass that inherits the class
-            'class' => \degree757\yii2s\servers\Tcp::class,
+            'class' => \parker714\yii2s\servers\Tcp::class,
         ],
     ]
 ...  
@@ -63,27 +63,27 @@ After installation, you need to modify the configuration and then use it:
 ...
 'components' => [
     'errorHandler' => [
-        'class'            => \degree757\yii2s\components\ErrorHandle::class,
+        'class'            => \parker714\yii2s\components\ErrorHandle::class,
         // Handle interface exceptions using events
         'as errorResponse' => [
-            'class'    => \degree757\yii2s\behaviors\ErrorResponse::class,
+            'class'    => \parker714\yii2s\behaviors\ErrorResponse::class,
             'prodCode' => 10000,
             'prodMsg'  => 'system busy',
         ],
     ],
     'response'     => [
-        'class'  => \degree757\yii2s\components\Response::class,
+        'class'  => \parker714\yii2s\components\Response::class,
         'format' => \yii\web\Response::FORMAT_JSON,
     ],
     'request'      => [
-        'class'   => \degree757\yii2s\components\Request::class,
+        'class'   => \parker714\yii2s\components\Request::class,
         'parsers' => [
             'application/json' => \yii\web\JsonParser::class,
         ],
     ],
     // Optional component to retrieve the sw original server object
     'sw'           => [
-        'class' => \degree757\yii2s\components\Sw::class,
+        'class' => \parker714\yii2s\components\Sw::class,
     ],
 ...
 

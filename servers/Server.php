@@ -1,12 +1,12 @@
 <?php
 
-namespace degree757\yii2s\servers;
+namespace parker714\yii2s\servers;
 
 use Yii;
 
 /**
  * Class Server
- * @package degree757\yii2s\servers
+ * @package parker714\yii2s\servers
  */
 abstract class Server
 {

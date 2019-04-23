@@ -1,10 +1,10 @@
 <?php
 
-namespace degree757\yii2s\components;
+namespace parker714\yii2s\components;
 
 /**
  * Class Request
- * @package degree757\yii2s\components
+ * @package parker714\yii2s\components
  */
 class Request extends \yii\web\Request
 {

@@ -18,10 +18,10 @@
   },
   "autoload": {
     "psr-4": {
-      "degree757\\yii2s\\": ""
+      "parker714\\yii2s\\": ""
     }
   },
   "extra": {
-    "bootstrap": "degree757\\yii2s\\Bootstrap"
+    "bootstrap": "parker714\\yii2s\\Bootstrap"
   }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace degree757\yii2s;
+namespace parker714\yii2s;
 
 use Yii;
 
 /**
  * Class Application
- * @package degree757\yii2s
+ * @package parker714\yii2s
  */
 class Application extends \yii\web\Application
 {

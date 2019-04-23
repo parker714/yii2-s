@@ -1,14 +1,14 @@
 <?php
 
-namespace degree757\yii2s\behaviors;
+namespace parker714\yii2s\behaviors;
 
 use Yii;
 use yii\base\Behavior;
-use degree757\yii2s\components\ErrorHandle;
+use parker714\yii2s\components\ErrorHandle;
 
 /**
  * Class ErrorResponse
- * @package degree757\yii2s\behaviors
+ * @package parker714\yii2s\behaviors
  */
 class ErrorResponse extends Behavior
 {

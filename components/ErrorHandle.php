@@ -1,6 +1,6 @@
 <?php
 
-namespace degree757\yii2s\components;
+namespace parker714\yii2s\components;
 
 use Yii;
 use yii\base\ErrorException;
@@ -8,7 +8,7 @@ use yii\base\ErrorHandler;
 
 /**
  * Class ErrorHandle
- * @package degree757\yii2s\components
+ * @package parker714\yii2s\components
  */
 class ErrorHandle extends ErrorHandler
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace degree757\yii2s;
+namespace parker714\yii2s;
 
 use yii\base\BootstrapInterface;
 
 /**
  * Class Bootstrap
- * @package degree757\yii2s
+ * @package parker714\yii2s
  */
 class Bootstrap implements BootstrapInterface
 {

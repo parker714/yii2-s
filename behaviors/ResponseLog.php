@@ -1,14 +1,14 @@
 <?php
 
-namespace degree757\yii2s\behaviors;
+namespace parker714\yii2s\behaviors;
 
 use Yii;
 use yii\base\Behavior;
-use degree757\yii2s\components\Response;
+use parker714\yii2s\components\Response;
 
 /**
  * Class ResponseLog
- * @package degree757\yii2s\behaviors
+ * @package parker714\yii2s\behaviors
  */
 class ResponseLog extends Behavior
 {

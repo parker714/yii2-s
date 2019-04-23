@@ -1,12 +1,12 @@
 <?php
 
-namespace degree757\yii2s\components;
+namespace parker714\yii2s\components;
 
 use yii\base\Component;
 
 /**
  * Class Sw
- * @package degree757\yii2s\components
+ * @package parker714\yii2s\components
  */
 class Sw extends Component
 {

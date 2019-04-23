@@ -1,6 +1,6 @@
 <?php
 
-namespace degree757\yii2s\behaviors;
+namespace parker714\yii2s\behaviors;
 
 use Yii;
 use yii\base\Behavior;
@@ -10,7 +10,7 @@ use yii\helpers\StringHelper;
 
 /**
  * Class ParamsValidate
- * @package degree757\yii2s\behaviors
+ * @package parker714\yii2s\behaviors
  */
 class ParamsValidate extends Behavior
 {

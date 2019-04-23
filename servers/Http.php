@@ -1,12 +1,12 @@
 <?php
 
-namespace degree757\yii2s\servers;
+namespace parker714\yii2s\servers;
 
 use Yii;
 
 /**
  * Class Http
- * @package degree757\yii2s\servers
+ * @package parker714\yii2s\servers
  */
 class Http extends Server
 {
@@ -47,7 +47,7 @@ class Http extends Server
     {
         parent::onWorkerStart($server, $workerId);
 
-        new \degree757\yii2s\Application($this->webAppConf);
+        new \parker714\yii2s\Application($this->webAppConf);
 
         // Save sw server in yii2 components，Convenient use of the sw server method
         if (Yii::$app->has('sw')) {
