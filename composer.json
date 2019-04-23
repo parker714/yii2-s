@@ -1,5 +1,5 @@
 {
-  "name": "degree757/yii2-s",
+  "name": "parker714/yii2-s",
   "description": "speed up yii2 app by swoole",
   "keywords": [
     "yii2",
@@ -10,7 +10,7 @@
   "authors": [
     {
       "name": "pb",
-      "email": "degree757@qq.com"
+      "email": "parker714@foxmail.com"
     }
   ],
   "require": {
