@@ -17,7 +17,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 
 Either run
 
-    composer require degree757/yii2-s -vvv
+    composer require parker714/yii2-s -vvv
 
 Usage
 -----
