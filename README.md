@@ -7,8 +7,6 @@ This extension provides an swoole for [Yii framework 2.0](http://www.yiiframewor
 For license information check the [LICENSE](LICENSE.md)-file.
 
 [![Latest Stable Version](https://poser.pugx.org/parker714/yii2-s/v/stable.png)](https://packagist.org/packages/parker714/yii2-s)
-[![Total Downloads](https://poser.pugx.org/parker714/yii2-s/downloads.png)](https://packagist.org/packages/parker714/yii2-s)
-
 
 Installation
 ------------
