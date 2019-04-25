@@ -15,7 +15,7 @@ class Http extends Server
      * @var string
      */
     public $processName = 'sw-http-server';
-    
+
     /**
      * sw http server events
      *
@@ -32,7 +32,11 @@ class Http extends Server
      */
     public $webAppConf = [];
 
-    public function getSwServer()
+    /**
+     * Init http server
+     * @return mixed|\swoole_http_server
+     */
+    public function initSwServer()
     {
         return new \swoole_http_server($this->ip, $this->port);
     }

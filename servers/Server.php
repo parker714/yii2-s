@@ -3,6 +3,7 @@
 namespace parker714\yii2s\servers;
 
 use Yii;
+use yii\helpers\Console;
 
 /**
  * Class Server
@@ -26,7 +27,7 @@ abstract class Server
      * Sw server process name
      * @var string
      */
-    public $processName = 'sw-server';
+    public $processName;
 
     /**
      * Sw server ip
@@ -38,7 +39,7 @@ abstract class Server
      * Sw server port
      * @var int
      */
-    public $port = 18757;
+    public $port = 10714;
 
     /**
      * Sw server config set, see: https://wiki.swoole.com/wiki/page/274.html
@@ -48,15 +49,19 @@ abstract class Server
 
     /**
      * Start sw server
+     * @throws \Exception
      */
     public function start()
     {
         @swoole_set_process_name($this->processName);
-        Yii::info("Sw Server {$this->ip}:{$this->port} Start");
 
-        $this->swServer = $this->getSwServer();
+        $this->swServer = $this->initSwServer();
         $this->swServer->set($this->set);
         $this->bindEvents();
+
+        $str = sprintf("%s | host:%s, port:%d, worker:%d " . PHP_EOL, $this->processName, $this->ip, $this->port, $this->set['worker_num']);
+        Yii::$app->controller->stdout($str, Console::FG_RED);
+
         $this->swServer->start();
     }
 
@@ -69,12 +74,17 @@ abstract class Server
         return [
             'worker_num'      => 2,
             'task_worker_num' => 1,
+            'max_request'     => 1,
             'pid_file'        => '@app/server.pid',
             'log_file'        => '@runtime/sw.log',
         ];
     }
 
-    abstract public function getSwServer();
+    /**
+     * Init sw server
+     * @return mixed
+     */
+    abstract public function initSwServer();
 
     /**
      * Bind sw callback events
@@ -102,6 +112,15 @@ abstract class Server
             'task',
             'finish',
         ];
+    }
+
+    /**
+     * Get sw server pid file, use pid for server process control
+     * @return mixed
+     */
+    public function getPidFile()
+    {
+        return $this->set['pid_file'];
     }
 
     /**
@@ -157,14 +176,5 @@ abstract class Server
     public function onFinish($server, $taskId, $data)
     {
         Yii::info("[Task #{$taskId}] Finish,data is " . json_encode($data));
-    }
-
-    /**
-     * Get sw server pid file, use pid for server process control
-     * @return mixed
-     */
-    public function getPidFile()
-    {
-        return $this->set['pid_file'];
     }
 }

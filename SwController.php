@@ -39,6 +39,7 @@ class SwController extends Controller
      * Sw server dispatcher
      * @param $command
      * @return bool|int
+     * @throws \Exception
      */
     public function actionServer($command)
     {

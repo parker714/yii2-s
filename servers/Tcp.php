@@ -23,7 +23,11 @@ class Tcp extends Server
                         'finish',
                         'receive'];
 
-    public function getSwServer()
+    /**
+     * Init tcp server
+     * @return mixed|\swoole_server
+     */
+    public function initSwServer()
     {
         return new \swoole_server($this->ip, $this->port);
     }
