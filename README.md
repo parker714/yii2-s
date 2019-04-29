@@ -65,7 +65,9 @@ After installation, you need to modify the configuration and then use it:
 
 Tutorials
 ----------
- [More Usage](MORE.md)
+ 1.[更多的使用方法](MORE.md)
+ 
+ 2.[在yii2中应用swoole的思路](https://www.jianshu.com/p/9c2788ccf3c0)
 
 Add WeChat to learn more
 ----------
