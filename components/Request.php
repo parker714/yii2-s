@@ -4,24 +4,19 @@ namespace parker714\yii2s\components;
 
 /**
  * Class Request
+ *
  * @package parker714\yii2s\components
  */
 class Request extends \yii\web\Request
 {
-    private $_swRequest;
-
-    public function setSwRequest($request)
-    {
-        $this->_swRequest = $request;
-    }
-
-    public function getSwRequest()
-    {
-        return $this->_swRequest;
-    }
+    /**
+     * @var \swoole_http_request
+     */
+    public $swRequest;
 
     /**
      * get request info
+     *
      * @return array
      * @throws \yii\base\InvalidConfigException
      */

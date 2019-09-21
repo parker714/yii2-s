@@ -3,15 +3,18 @@
 namespace parker714\yii2s\servers;
 
 use Yii;
+use parker714\yii2s\Application;
 
 /**
  * Class Http
+ *
  * @package parker714\yii2s\servers
  */
 class Http extends Server
 {
     /**
      * Sw server process name
+     *
      * @var string
      */
     public $processName = 'sw-http-server';
@@ -21,19 +24,18 @@ class Http extends Server
      *
      * @var array
      */
-    public $swEvents = ['WorkerStart',
-                        'task',
-                        'finish',
-                        'Request'];
+    public $swEvents = ['Request'];
 
     /**
      * Yii2 web app config
+     *
      * @var array
      */
     public $webAppConf = [];
 
     /**
      * Init http server
+     *
      * @return mixed|\swoole_http_server
      */
     public function initSwServer()
@@ -43,24 +45,27 @@ class Http extends Server
 
     /**
      * The sw http server work process starts the callback event
+     *
      * @param $server
      * @param $workerId
+     *
      * @throws \yii\base\InvalidConfigException
      */
     public function onWorkerStart($server, $workerId)
     {
         parent::onWorkerStart($server, $workerId);
 
-        new \parker714\yii2s\Application($this->webAppConf);
+        new Application($this->webAppConf);
 
         // Save sw server in yii2 components，Convenient use of the sw server method
         if (Yii::$app->has('sw')) {
-            Yii::$app->sw->setSwServer($server);
+            Yii::$app->sw->server = $server;
         }
     }
 
     /**
      * Sw http server request callback event
+     *
      * @param $request
      * @param $response
      */
@@ -72,13 +77,14 @@ class Http extends Server
 
     /**
      * Set yii2 app run env
+     *
      * @param $request
      * @param $response
      */
     public function setAppRunEnv($request, $response)
     {
-        Yii::$app->request->setSwRequest($request);
-        Yii::$app->response->setSwResponse($response);
+        Yii::$app->request->swRequest   = $request;
+        Yii::$app->response->swResponse = $response;
 
         Yii::$app->request->getHeaders()
             ->removeAll();

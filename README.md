@@ -43,8 +43,6 @@ After installation, you need to modify the configuration and then use it:
         'class'            => \parker714\yii2s\components\ErrorHandle::class,
         'as errorResponse' => [
             'class'    => \parker714\yii2s\behaviors\ErrorResponse::class,
-            'prodCode' => 10000,
-            'prodMsg'  => 'system busy',
         ],
     ],
     'response'     => [
@@ -65,9 +63,9 @@ After installation, you need to modify the configuration and then use it:
 
 Tutorials
 ----------
- 1.[更多的使用方法](MORE.md)
+ 1.[More ways to use](MORE.md)
  
- 2.[在yii2中应用swoole的思路](https://www.jianshu.com/p/9c2788ccf3c0)
+ 2.[The idea of using swoole in yii2](https://www.jianshu.com/p/9c2788ccf3c0)
 
 Add WeChat to learn more
 ----------

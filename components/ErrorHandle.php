@@ -8,6 +8,7 @@ use yii\base\ErrorHandler;
 
 /**
  * Class ErrorHandle
+ *
  * @package parker714\yii2s\components
  */
 class ErrorHandle extends ErrorHandler
@@ -15,10 +16,11 @@ class ErrorHandle extends ErrorHandler
     /**
      * @event ErrorEvent an event that is triggered at the end of [[renderException()]].
      */
-    const EVENT_AFTER_RENDER = 'afterSend';
+    const EVENT_AFTER_RENDER = 'afterRender';
 
     /**
      * rewrite renderException
+     *
      * @param \Exception $exception
      */
     public function renderException($exception)
@@ -29,6 +31,7 @@ class ErrorHandle extends ErrorHandler
 
     /**
      * rewrite handleException
+     *
      * @param \Exception $exception
      *
      * @throws \Exception
@@ -47,10 +50,11 @@ class ErrorHandle extends ErrorHandler
 
     /**
      * rewrite handleError
-     * @param int $code
+     *
+     * @param int    $code
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
      *
      * @return bool|void
      * @throws ErrorException
@@ -100,8 +104,9 @@ class ErrorHandle extends ErrorHandler
 
     /**
      * rewrite handleFallbackExceptionMessage
+     *
      * @param \Exception|\Throwable $exception
-     * @param \Exception $previousException
+     * @param \Exception            $previousException
      *
      * @throws \Exception
      */

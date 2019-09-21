@@ -8,23 +8,30 @@ use parker714\yii2s\components\ErrorHandle;
 
 /**
  * Class ErrorResponse
+ *
  * @package parker714\yii2s\behaviors
  */
 class ErrorResponse extends Behavior
 {
     /**
-     * prod err code
+     * Prod env err code
      *
      * @var int
      */
     public $prodCode = 10000;
+
     /**
-     * prod err msg
+     * Prod env err msg
      *
      * @var string
      */
     public $prodMsg = 'system busy';
 
+    /**
+     * Behavior events
+     *
+     * @return array
+     */
     public function events()
     {
         return [
@@ -32,6 +39,9 @@ class ErrorResponse extends Behavior
         ];
     }
 
+    /**
+     * Api Error handle render
+     */
     public function afterRender()
     {
         $exception = $this->owner->exception;
@@ -39,9 +49,10 @@ class ErrorResponse extends Behavior
         $data['code']  = $exception->getCode();
         $data['msg']   = $exception->getMessage();
         $data['debug'] = self::getDebugInfo($exception);
-        Yii::error($data);
 
         if (YII_ENV_PROD) {
+            Yii::error($data);
+
             unset($data['debug']);
             $data['code'] = $this->prodCode;
             $data['msg']  = $this->prodMsg;
@@ -52,7 +63,8 @@ class ErrorResponse extends Behavior
     }
 
     /**
-     * Get error request env info
+     * Get error env info
+     *
      * @param $exception
      *
      * @return array
@@ -60,12 +72,12 @@ class ErrorResponse extends Behavior
     public static function getDebugInfo($exception)
     {
         return [
-            'request_info' => Yii::$app->request->getInfo(),
-            'error_code'   => $exception->getCode(),
-            'error_file'   => $exception->getFile(),
-            'error_line'   => $exception->getLine(),
-            'error_msg'    => $exception->getMessage(),
-            'error_trace'  => explode(PHP_EOL, $exception->getTraceAsString()),
+            'request'     => Yii::$app->request->getInfo(),
+            'error_code'  => $exception->getCode(),
+            'error_file'  => $exception->getFile(),
+            'error_line'  => $exception->getLine(),
+            'error_msg'   => $exception->getMessage(),
+            'error_trace' => explode(PHP_EOL, $exception->getTraceAsString()),
         ];
     }
 }

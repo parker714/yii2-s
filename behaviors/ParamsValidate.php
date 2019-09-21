@@ -10,6 +10,7 @@ use yii\helpers\StringHelper;
 
 /**
  * Class ParamsValidate
+ *
  * @package parker714\yii2s\behaviors
  */
 class ParamsValidate extends Behavior
@@ -66,8 +67,14 @@ class ParamsValidate extends Behavior
      */
     public $errFunc;
 
+    /**
+     * @var array
+     */
     private $_validateKey = [];
 
+    /**
+     * @return array
+     */
     public function events()
     {
         return [
@@ -94,6 +101,11 @@ class ParamsValidate extends Behavior
         }
     }
 
+    /**
+     * @param $url
+     *
+     * @return array
+     */
     public function getValidateRules($url)
     {
         $rule = [];
@@ -107,6 +119,9 @@ class ParamsValidate extends Behavior
         return $rule;
     }
 
+    /**
+     * @param $rules
+     */
     public function setValidateKey($rules)
     {
         foreach ($rules as $rule) {
@@ -121,6 +136,9 @@ class ParamsValidate extends Behavior
         }
     }
 
+    /**
+     * @param $post
+     */
     public function setValidateVal($post)
     {
         foreach ($this->_validateKey as $k => $v) {

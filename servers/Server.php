@@ -7,48 +7,56 @@ use yii\helpers\Console;
 
 /**
  * Class Server
+ *
  * @package parker714\yii2s\servers
  */
 abstract class Server
 {
     /**
      * Sw server instance
+     *
      * @var Server
      */
     public $swServer;
 
     /**
      * Sw server events
+     *
      * @var array
      */
     public $swEvents = [];
 
     /**
      * Sw server process name
+     *
      * @var string
      */
-    public $processName;
+    public $processName = 'server';
 
     /**
      * Sw server ip
+     *
      * @var string
      */
     public $ip = '0.0.0.0';
 
     /**
      * Sw server port
+     *
      * @var int
      */
     public $port = 10714;
 
     /**
      * Sw server config set, see: https://wiki.swoole.com/wiki/page/274.html
+     *
      * @var
      */
     public $set = [];
 
     /**
      * Start sw server
+     *
      * @throws \Exception
      */
     public function start()
@@ -59,14 +67,14 @@ abstract class Server
         $this->swServer->set($this->set);
         $this->bindEvents();
 
-        $str = sprintf("%s | host:%s, port:%d, worker:%d " . PHP_EOL, $this->processName, $this->ip, $this->port, $this->set['worker_num']);
-        Yii::$app->controller->stdout($str, Console::FG_RED);
+        echo sprintf("%s | listen: %s:%d, worker:%d " . PHP_EOL, $this->processName, $this->ip, $this->port, $this->set['worker_num']);
 
         $this->swServer->start();
     }
 
     /**
      * Returns the coreSets
+     *
      * @return array
      */
     public function coreSets()
@@ -82,6 +90,7 @@ abstract class Server
 
     /**
      * Init sw server
+     *
      * @return mixed
      */
     abstract public function initSwServer();
@@ -103,19 +112,21 @@ abstract class Server
 
     /**
      * Returns the coreEvents
+     *
      * @return array
      */
     public function coreEvents()
     {
         return [
             'WorkerStart',
-            'task',
-            'finish',
+            'Task',
+            'Finish',
         ];
     }
 
     /**
      * Get sw server pid file, use pid for server process control
+     *
      * @return mixed
      */
     public function getPidFile()
@@ -125,6 +136,7 @@ abstract class Server
 
     /**
      * The sw work process starts the callback event
+     *
      * @param $server
      * @param $workerId
      */
@@ -169,6 +181,7 @@ abstract class Server
 
     /**
      * The sw task process finish the callback event
+     *
      * @param $server
      * @param $taskId
      * @param $data

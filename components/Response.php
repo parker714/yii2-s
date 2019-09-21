@@ -4,21 +4,15 @@ namespace parker714\yii2s\components;
 
 /**
  * Class Response
+ *
  * @package parker714\yii2s\components
  */
 class Response extends \yii\web\Response
 {
-    private $_swResponse;
-
-    public function setSwResponse($response)
-    {
-        $this->_swResponse = $response;
-    }
-
-    public function getSwResponse()
-    {
-        return $this->_swResponse;
-    }
+    /**
+     * @var \swoole_http_response
+     */
+    public $swResponse;
 
     /**
      * rewrite sendContent
@@ -26,7 +20,7 @@ class Response extends \yii\web\Response
     public function sendContent()
     {
         if ($this->stream === null) {
-            $this->_swResponse->end($this->content);
+            $this->swResponse->end($this->content);
 
             return;
         }
@@ -38,18 +32,18 @@ class Response extends \yii\web\Response
                 if ($pos + $chunkSize > $end) {
                     $chunkSize = $end - $pos + 1;
                 }
-                $this->_swResponse->write(fread($handle, $chunkSize));
+                $this->swResponse->write(fread($handle, $chunkSize));
                 //flush(); // Free up memory. Otherwise large files will trigger PHP's memory limit.
             }
             fclose($handle);
         } else {
             while (!feof($this->stream)) {
-                $this->_swResponse->write(fread($this->stream, $chunkSize));
+                $this->swResponse->write(fread($this->stream, $chunkSize));
                 //flush();
             }
             fclose($this->stream);
         }
-        $this->_swResponse->end();
+        $this->swResponse->end();
     }
 
     /**
@@ -61,10 +55,10 @@ class Response extends \yii\web\Response
         if ($headers->count > 0) {
             foreach ($headers as $name => $values) {
                 foreach ($values as $value) {
-                    $this->_swResponse->header($name, $value);
+                    $this->swResponse->header($name, $value);
                 }
             }
         }
-        $this->_swResponse->status($this->getStatusCode());
+        $this->swResponse->status($this->getStatusCode());
     }
 }

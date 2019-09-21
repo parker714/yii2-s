@@ -9,18 +9,21 @@ use yii\helpers\Console;
 
 /**
  * Class SwController
+ *
  * @package parker714\yii2s
  */
 class SwController extends Controller
 {
     /**
      * Sw server instance
+     *
      * @var Server
      */
     public $server;
 
     /**
      * Init sw server instance
+     *
      * @throws \yii\base\InvalidConfigException
      */
     public function init()
@@ -37,7 +40,9 @@ class SwController extends Controller
 
     /**
      * Sw server dispatcher
+     *
      * @param $command
+     *
      * @return bool|int
      * @throws \Exception
      */

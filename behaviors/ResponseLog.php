@@ -8,10 +8,16 @@ use parker714\yii2s\components\Response;
 
 /**
  * Class ResponseLog
+ *
  * @package parker714\yii2s\behaviors
  */
 class ResponseLog extends Behavior
 {
+    /**
+     * Response components beforeSend event
+     *
+     * @return array
+     */
     public function events()
     {
         return [
@@ -19,11 +25,14 @@ class ResponseLog extends Behavior
         ];
     }
 
+    /**
+     * Response log action
+     */
     public function beforeSend()
     {
         $log = [
-            'req'  => Yii::$app->request->getInfo(),
-            'resp' => $this->owner->data,
+            'request'  => Yii::$app->request->getInfo(),
+            'response' => $this->owner->data,
         ];
         Yii::info(json_encode($log));
     }
